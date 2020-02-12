@@ -5,7 +5,9 @@ import Card from "../components/Card";
 const App = props => {
   return (
     <div className="App">
-      <header>Brewdog Beer Challenge</header>
+      <header className="App__header">
+        <h1 className="App__header__title">Brewdog Beer Challenge</h1>
+      </header>
       <main className="App__wrapper">
         {props.responseData.map(card => (
           <Link key={card.id} href="/p/[id]" as={`/p/${card.id}-${card.name}`}>
@@ -47,8 +49,18 @@ const App = props => {
         }
 
         .App {
-          max-width: 1200px;
+          max-width: 1400px;
           margin: 0 auto;
+        }
+
+        .App__header {
+          text-align: center;
+          padding: 100px 50px;
+        }
+
+        .App__header__title {
+          font-size: 3em;
+          color: #7b829f;
         }
 
         .App__wrapper {

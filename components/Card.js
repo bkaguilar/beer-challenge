@@ -18,12 +18,12 @@ const Card = props => {
         <img src={props.card.image_url} alt="" />
       </figure>
       <div className="Card__text">
-        <h1 className="Card__text__name">
+        <h2 className="Card__text__name">
           {props.card.name}
           <span className="Card__text__name__ABV" title="Alcohol By Volume">
             {props.card.abv}
           </span>
-        </h1>
+        </h2>
         <p className="Card__text__description">{props.card.description}</p>
       </div>
       <style jsx>{`
@@ -31,18 +31,19 @@ const Card = props => {
           position: relative;
           height: 350px;
           width: 100%;
-          background: rgba(249, 203, 56, .9);
+          background: #f9cb38;
           border-radius: 20px;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: flex-end;
           box-shadow: 0 15px 15px -5px rgba(174, 174, 174, 0.3);
-          transition: all 400ms cubic-bezier(0.215, 0.61, 0.355, 1);
+          transition: all 700ms cubic-bezier(0.215, 0.61, 0.355, 1);
         }
 
         .Card:hover {
         box-shadow: 0 15px 25px 0 rgba(174, 174, 174, 0.4);
+        transform: translateY(-5px);
           // transform: perspective(300px) rotateY(${posX}deg) rotateX(${posY}deg);
         }
 
