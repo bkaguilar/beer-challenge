@@ -8,9 +8,9 @@ const App = props => {
       <header>Brewdog Beer Challenge</header>
       <main>
         {props.responseData.map(card => (
-          <Link href="/p/[id]" as={`/p/${card.id}`}>
+          <Link key={card.id} href="/p/[id]" as={`/p/${card.id}-${card.name}`}>
             <a>
-              <Card key={card.id} card={card} />
+              <Card card={card} />
             </a>
           </Link>
         ))}
