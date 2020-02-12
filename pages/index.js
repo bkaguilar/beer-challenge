@@ -10,8 +10,8 @@ const App = props => {
       </header>
       <main className="App__wrapper">
         {props.responseData.map(card => (
-          <Link key={card.id} href="/p/[id]" as={`/p/${card.id}-${card.name}`}>
-            <a>
+          <Link key={card.id} href="/beers/[id]" as={`/beers/${card.id}`}>
+            <a target="_blank">
               <Card card={card} />
             </a>
           </Link>
@@ -46,6 +46,11 @@ const App = props => {
 
         a {
           text-decoration: none;
+        }
+
+        button {
+          outline: none;
+          border: none;
         }
 
         .App {
