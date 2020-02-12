@@ -1,7 +1,7 @@
 const Card = props => (
   <article className="Card">
     <figure className="Card__image">
-      <img src="" alt="" />
+      <img src={props.card.image_url} alt="" />
     </figure>
     <div className="Card__text">
       <h1 className="Card__text__name">{props.card.name}</h1>
