@@ -19,8 +19,10 @@ const Card = props => {
       </figure>
       <div className="Card__text">
         <h1 className="Card__text__name">
-          {props.card.name}{" "}
-          <span className="Card__text__ABV">{props.card.abv}</span>
+          {props.card.name}
+          <span className="Card__text__name__ABV" title="Alcohol By Volume">
+            {props.card.abv}
+          </span>
         </h1>
         <p className="Card__text__description">{props.card.description}</p>
       </div>
@@ -29,9 +31,8 @@ const Card = props => {
           position: relative;
           height: 350px;
           width: 100%;
-          background-color: white;
-          padding: 15px;
-          border-radius: 10px;
+          background: rgba(249, 203, 56, .9);
+          border-radius: 20px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -46,19 +47,38 @@ const Card = props => {
         }
 
         .Card__image {
-          position: absolute;
-          top: -30px;
+          transform: translateY(-15%);
+          height: 50%;
+          width: 50%;
+          border-radius: 8px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         img {
-          heigth: 50px;
-          width: 50px;
+          height: 90%;
+          object-fit: cover;
         }
 
         .Card__text {
+          min-height: 180px;
           overflow: hidden;
-          height: 50%;
+          padding: 15px;
+          border-radius: 20px;
+          background-color: white;
           color: #7b829f;
+          font-size: .9em;
+          transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        .Card__text:hover {
+          min-height: 100%;
+        }
+
+        .Card__text:hover > .Card__text__description {
+          overflow: visible;
+          height: auto;
         }
 
         .Card__text__name {
@@ -69,9 +89,16 @@ const Card = props => {
           align-items: flex-end;
         }
 
-        .Card__text__ABV {
+        .Card__text__name__ABV {
           color: #7b829f;
           font-size: 18px;
+        }
+
+        .Card__text__description {
+          line-height: 1.5;
+          text-align: justify;
+          overflow: hidden;
+          height: 7em;
         }
       `}</style>
     </article>

@@ -38,6 +38,7 @@ const App = props => {
         body {
           // background: #e8eff6;
           font-family: "Quicksand", sans-serif;
+          line-height: 1.6;
           background: whitesmoke;
         }
 
@@ -51,9 +52,9 @@ const App = props => {
         }
 
         .App__wrapper {
-          padding: 100px 0;
+          padding: 100px 50px;
           display: grid;
-          grid-gap: 60px 20px;
+          grid-gap: 80px;
           place-items: center;
           justify-content: center;
           grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
