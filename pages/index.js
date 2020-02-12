@@ -1,4 +1,5 @@
 import fetch from "isomorphic-unfetch";
+import Link from "next/link";
 import Card from "../components/Card";
 
 const App = props => {
@@ -6,9 +7,13 @@ const App = props => {
     <div>
       <header>Brewdog Beer Challenge</header>
       <main>
-        {props.responseData.map(card => {
-          return <Card key={card.id} card={card} />;
-        })}
+        {props.responseData.map(card => (
+          <Link href="/p/[id]" as={`/p/${card.id}`}>
+            <a>
+              <Card key={card.id} card={card} />
+            </a>
+          </Link>
+        ))}
       </main>
     </div>
   );
