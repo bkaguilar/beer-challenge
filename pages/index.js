@@ -4,9 +4,9 @@ import Card from "../components/Card";
 
 const App = props => {
   return (
-    <div>
+    <div className="App">
       <header>Brewdog Beer Challenge</header>
-      <main>
+      <main className="App__wrapper">
         {props.responseData.map(card => (
           <Link key={card.id} href="/p/[id]" as={`/p/${card.id}-${card.name}`}>
             <a>
@@ -15,6 +15,50 @@ const App = props => {
           </Link>
         ))}
       </main>
+      <style jsx global>{`
+        @import url("https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap");
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          scroll-behavior: smooth;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+        *::-moz-selection {
+          // background: rgba(orange, 0.5);
+          color: white;
+        }
+        *::selection {
+          // color: $sc-color;
+          // background: rgba($brand-color_2, 0.5);
+        }
+
+        body {
+          // background: #e8eff6;
+          font-family: "Quicksand", sans-serif;
+          background: whitesmoke;
+        }
+
+        a {
+          text-decoration: none;
+        }
+
+        .App {
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .App__wrapper {
+          padding: 100px 0;
+          display: grid;
+          grid-gap: 60px 20px;
+          place-items: center;
+          justify-content: center;
+          grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+        }
+      `}</style>
     </div>
   );
 };
