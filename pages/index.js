@@ -2,11 +2,13 @@ import fetch from "isomorphic-unfetch";
 import Link from "next/link";
 import Card from "../components/Card";
 import App from "../App";
+import Header from "../components/Header";
 
 const index = props => {
   return (
     <App>
-      <main className="App__wrapper">
+      <Header />
+      <main className="Beers">
         {props.responseData.map(card => (
           <Link key={card.id} href="/beer/[id]" as={`/beer/${card.id}`}>
             <a>
@@ -16,7 +18,7 @@ const index = props => {
         ))}
       </main>
       <style jsx>{`
-        .App__wrapper {
+        .Beers {
           padding: 100px 50px;
           display: grid;
           grid-gap: 80px;

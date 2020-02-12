@@ -3,9 +3,9 @@ import App from "../../App";
 const Beer = props => {
   return (
     <App>
-      <main>
-        <h1>{props.page.name}</h1>
-        <figure>
+      <main className="Beer">
+        <h1 className="Beer__name">{props.page.name}</h1>
+        <figure className="Beer__image">
           <img src={props.page.image_url} alt="" />
         </figure>
         <span title="Alcohol By Volume">{props.page.abv}</span>

@@ -1,9 +1,6 @@
-import Header from "./components/Header";
-
 const App = props => {
   return (
     <div className="App">
-      <Header />
       {props.children}
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap");
