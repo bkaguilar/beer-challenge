@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Button from "../components/Button";
 
 const Card = props => {
   const [posY, setPosY] = useState(0);
