@@ -1,5 +1,6 @@
 import App from "../../App";
 import Button from "../../components/Button";
+import Section from "../../components/Section";
 import { useState } from "react";
 import fetch from "isomorphic-unfetch";
 
@@ -26,23 +27,21 @@ const Beer = props => {
           </figure>
         </header>
         <div className="Beer__text">
-          <section className="Beer__text__description">
-            <h2 className="Beer__section__title">Description</h2>
+          <Section name="Description">
             <p className="Beer__text__description__content">
               {props.page.description}
             </p>
-          </section>
-          <section className="Beer__text__ingredients">
-            <h2 className="Beer__section__title">Beers</h2>
-            <nav className="Beer__text__ingredients__nav">
+          </Section>
+          <Section name="Beers">
+            <nav className="Beer__text__beers__nav">
               {ingredients.map((item, index) => (
                 <a
                   key={index}
                   index={index}
                   className={
                     active === index
-                      ? "Beer__text__ingredients__nav__item itemActive"
-                      : "Beer__text__ingredients__nav__item"
+                      ? "Beer__text__beers__nav__item itemActive"
+                      : "Beer__text__beers__nav__item"
                   }
                   onClick={handleActiveTab}
                 >
@@ -50,7 +49,7 @@ const Beer = props => {
                 </a>
               ))}
             </nav>
-            <div className="Beer__text__ingredients__content">
+            <div className="Beer__text__beers__content">
               {active === 0 && (
                 <IngredientsList
                   ingredient={props.page.ingredients.malt}
@@ -64,14 +63,9 @@ const Beer = props => {
                   id="hops"
                 />
               )}
-
-              {/* <ul className="methods">
-                {Object.entries(props.page.method).map(([key], index) => (
-                  <li key={index}>{key}</li>
-                ))}
-              </ul> */}
             </div>
-          </section>
+          </Section>
+          <Section name="Methods"></Section>
         </div>
       </main>
       <style jsx>{`
@@ -121,22 +115,11 @@ const Beer = props => {
           background: white;
         }
 
-        .Beer__section__title {
-          color: #7b829f;
-          font-size: 1.2em;
-          margin-bottom: 30px;
-        }
-
-        .Beer__text__description,
-        .Beer__text__ingredients {
-          margin-bottom: 70px;
-        }
-
-        .Beer__text__ingredients__nav {
+        .Beer__text__beers__nav {
           display: flex;
         }
 
-        .Beer__text__ingredients__nav__item {
+        .Beer__text__beers__nav__item {
           position: relative;
           cursor: pointer;
           text-transform: capitalize;
@@ -148,7 +131,7 @@ const Beer = props => {
           border-bottom: 3px solid transparent;
         }
 
-        .Beer__text__ingredients__nav__item::before {
+        .Beer__text__beers__nav__item::before {
           content: "";
           position: absolute;
           top: 50%;
@@ -162,11 +145,11 @@ const Beer = props => {
           background: rgba(241, 108, 81, 0.2);
         }
 
-        .Beer__text__ingredients__nav__item:hover::before {
+        .Beer__text__beers__nav__item:hover::before {
           transform: translate(-50%, -50%) scaleY(1);
         }
 
-        .Beer__text__ingredients__content {
+        .Beer__text__beers__content {
           position: relative;
           overflow: hidden;
           min-height: 500px;
