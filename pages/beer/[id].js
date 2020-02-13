@@ -33,7 +33,7 @@ const Beer = props => {
             </p>
           </section>
           <section className="Beer__text__ingredients">
-            <h2 className="Beer__section__title">Ingredients</h2>
+            <h2 className="Beer__section__title">Beers</h2>
             <nav className="Beer__text__ingredients__nav">
               {ingredients.map((item, index) => (
                 <a
@@ -84,7 +84,6 @@ const Beer = props => {
         }
 
         .Beer__header {
-          z-indez: 2;
           width: 100%;
           height: 300px;
           padding: 0 100px;
@@ -114,7 +113,7 @@ const Beer = props => {
         }
 
         .Beer__text {
-          z-indez: 1;
+          width: 100%;
           overflow: hidden;
           padding: 70px 100px;
           border-top-left-radius: 20px;
@@ -140,6 +139,7 @@ const Beer = props => {
         .Beer__text__ingredients__nav__item {
           position: relative;
           cursor: pointer;
+          text-transform: capitalize;
           font-weight: bold;
           color: rgba(241, 108, 81, 0.6);
           padding: 10px;
@@ -256,11 +256,16 @@ const Item = props => {
         }
 
         span {
-          max-width: 33%;
+          // max-width: 33%;
+          width: 33%;
         }
 
-        span:first-of-type {
-          min-width: 150px;
+        span:nth-of-type(2) {
+          text-align: center;
+        }
+
+        span:last-of-type {
+          text-align: right;
         }
       `}</style>
     </li>
