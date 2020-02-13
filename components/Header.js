@@ -2,7 +2,6 @@ const Header = props => {
   return (
     <header className="Header">
       <h1 className="Header__title">Brewdog Beer Challenge</h1>
-
       <style jsx>{`
         .Header {
           text-align: center;

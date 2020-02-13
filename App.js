@@ -38,8 +38,12 @@ const App = props => {
           border: none;
         }
 
+        ul {
+          list-style: none;
+        }
+
         .App {
-          max-width: 1400px;
+          max-width: 1300px;
           margin: 0 auto;
         }
       `}</style>
