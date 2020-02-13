@@ -1,6 +1,10 @@
 const Button = props => {
   return (
-    <button className="Button" title={props.value} alt={props.value}>
+    <button
+      className={"Button" + props.className}
+      title={props.value}
+      alt={props.value}
+    >
       {props.value}
       <style jsx>{`
         .Button {

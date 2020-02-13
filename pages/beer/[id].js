@@ -31,24 +31,15 @@ const Beer = props => {
                 Hops
               </a>
               <a className="Beer__text__ingredients__nav__item">Malt</a>
-              <a className="Beer__text__ingredients__nav__item">Methods</a>
             </nav>
             <div className="Beer__text__ingredients__content">
-              <ul>
-                {props.page.ingredients.hops.map((item, index) => (
-                  <Item key={index} item={item} />
-                ))}
-              </ul>
-              <ul>
-                {props.page.ingredients.malt.map((item, index) => (
-                  <Item key={index} item={item} />
-                ))}
-              </ul>
-              <ul className="methods">
+              <IngredientsList ingredient={props.page.ingredients.hops} />
+              <IngredientsList ingredient={props.page.ingredients.malt} />
+              {/* <ul className="methods">
                 {Object.entries(props.page.method).map(([key], index) => (
                   <li key={index}>{key}</li>
                 ))}
-              </ul>
+              </ul> */}
             </div>
           </section>
         </div>
@@ -112,17 +103,17 @@ const Beer = props => {
           margin-bottom: 70px;
         }
 
-        .Beer__text__ingredients__nav,
-        .Beer__text__ingredients__content {
+        .Beer__text__ingredients__nav {
           display: flex;
-          justify-content: space-between;
         }
+
         .Beer__text__ingredients__nav__item {
           position: relative;
           cursor: pointer;
           font-weight: bold;
           color: rgba(241, 108, 81, 0.6);
           padding: 10px;
+          margin-right: 50px;
           transition: all 200ms ease;
           border-bottom: 3px solid transparent;
         }
@@ -150,26 +141,54 @@ const Beer = props => {
           min-height: 500px;
         }
 
-        .methods {
-          display: none;
-        }
-
-        ul {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          background: white;
-          height: 100%;
-          padding: 60px 0;
-        }
-
         .itemActive {
           color: #f16c51;
           border-bottom-color: #f16c51;
         }
       `}</style>
     </App>
+  );
+};
+
+const IngredientsList = props => {
+  let titleColumn = ["Name", "Amount", "Action"];
+  return (
+    <ul className="IngredientsList">
+      <div className="IngredientsList__nav">
+        {titleColumn.map((item, index) => (
+          <h3 key={index} className="IngredientsList__nav__title">
+            {item}
+          </h3>
+        ))}
+      </div>
+      {props.ingredient.map((item, index) => (
+        <Item key={index} item={item} />
+      ))}
+
+      <style jsx>{`
+        .IngredientsList {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          background: white;
+          height: 100%;
+          padding: 20px 0;
+        }
+
+        .IngredientsList__nav {
+          font-size: 0.8em;
+          color: rgba(123, 130, 159, 0.6);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        h3 {
+          max-width: 33%;
+        }
+      `}</style>
+    </ul>
   );
 };
 
@@ -180,21 +199,25 @@ const Item = props => {
       <span className="Item__value">
         {props.item.amount.value + " " + props.item.amount.unit}
       </span>
-      <Button value="Done" />
-
+      <span>
+        <Button value="Done" className=" Button--ingredients" />{" "}
+      </span>
       <style jsx>{`
         .Item {
           display: flex;
           justify-content: space-between;
-          align-item: center;
-          margin: 35px 0;
+          align-items: center;
+          margin: 25px 0;
           padding: 15px 0;
           border-bottom: 0.3px solid rgba(123, 130, 159, 0.5);
         }
 
-        .Item__name {
-          min-width: 200px;
-          overflow: hidden;
+        span {
+          max-width: 33%;
+        }
+
+        span:first-of-type {
+          min-width: 150px;
         }
       `}</style>
     </li>
