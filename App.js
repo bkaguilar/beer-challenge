@@ -35,6 +35,7 @@ const App = props => {
         }
 
         button {
+          cursor: pointer;
           outline: none;
           border: none;
         }

@@ -1,4 +1,5 @@
 import App from "../../App";
+import Button from "../../components/Button";
 import fetch from "isomorphic-unfetch";
 
 const Beer = props => {
@@ -25,25 +26,27 @@ const Beer = props => {
           </section>
           <section className="Beer__text__ingredients">
             <h2 className="Beer__section__title">Ingredients</h2>
-            <nav className="Beer__text__ingredients__keys">
-              <h3>Hops</h3>
-              <h3>Malt</h3>
-              <h3>Methods</h3>
+            <nav className="Beer__text__ingredients__nav">
+              <a className="Beer__text__ingredients__nav__item itemActive">
+                Hops
+              </a>
+              <a className="Beer__text__ingredients__nav__item">Malt</a>
+              <a className="Beer__text__ingredients__nav__item">Methods</a>
             </nav>
             <div className="Beer__text__ingredients__content">
               <ul>
                 {props.page.ingredients.hops.map((item, index) => (
-                  <List key={index} item={item} />
+                  <Item key={index} item={item} />
                 ))}
               </ul>
               <ul>
                 {props.page.ingredients.malt.map((item, index) => (
-                  <List key={index} item={item} />
+                  <Item key={index} item={item} />
                 ))}
               </ul>
-              <ul>
-                {Object.entries(props.page.method).map(([key]) => (
-                  <li>{key}</li>
+              <ul className="methods">
+                {Object.entries(props.page.method).map(([key], index) => (
+                  <li key={index}>{key}</li>
                 ))}
               </ul>
             </div>
@@ -109,25 +112,92 @@ const Beer = props => {
           margin-bottom: 70px;
         }
 
-        .Beer__text__ingredients__keys,
+        .Beer__text__ingredients__nav,
         .Beer__text__ingredients__content {
           display: flex;
           justify-content: space-between;
+        }
+        .Beer__text__ingredients__nav__item {
+          position: relative;
+          cursor: pointer;
+          font-weight: bold;
+          color: rgba(241, 108, 81, 0.6);
+          padding: 10px;
+          transition: all 200ms ease;
+          border-bottom: 3px solid transparent;
+        }
+
+        .Beer__text__ingredients__nav__item::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) scaleY(0);
+          transform-origin: 0 bottom;
+          transition: transform 200ms ease;
+          width: 100%;
+          height: 100%;
+          border-radius: 4px;
+          background: rgba(241, 108, 81, 0.2);
+        }
+
+        .Beer__text__ingredients__nav__item:hover::before {
+          transform: translate(-50%, -50%) scaleY(1);
+        }
+
+        .Beer__text__ingredients__content {
+          position: relative;
+          min-height: 500px;
+        }
+
+        .methods {
+          display: none;
+        }
+
+        ul {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          background: white;
+          height: 100%;
+          padding: 60px 0;
+        }
+
+        .itemActive {
+          color: #f16c51;
+          border-bottom-color: #f16c51;
         }
       `}</style>
     </App>
   );
 };
 
-const List = props => {
+const Item = props => {
   return (
-    <ul className="List">
-      <li className="List__item">
-        <span>{props.item.name}</span>
-        <span>{props.item.amount.value}</span>
-        <span>{props.item.amount.unit}</span>
-      </li>
-    </ul>
+    <li className="Item">
+      <span className="Item__name">{props.item.name}</span>
+      <span className="Item__value">
+        {props.item.amount.value + " " + props.item.amount.unit}
+      </span>
+      <Button value="Done" />
+
+      <style jsx>{`
+        .Item {
+          display: flex;
+          justify-content: space-between;
+          align-item: center;
+          margin: 35px 0;
+          padding: 15px 0;
+          border-bottom: 0.3px solid rgba(123, 130, 159, 0.5);
+        }
+
+        .Item__name {
+          min-width: 200px;
+          overflow: hidden;
+        }
+      `}</style>
+    </li>
   );
 };
 

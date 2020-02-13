@@ -1,8 +1,8 @@
 import fetch from "isomorphic-unfetch";
 import Link from "next/link";
-import Card from "../components/Card";
 import App from "../App";
 import Header from "../components/Header";
+import Card from "../components/Card";
 
 const index = props => {
   return (
