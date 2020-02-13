@@ -180,6 +180,7 @@ const IngredientsList = props => {
           font-size: 0.8em;
           color: rgba(123, 130, 159, 0.6);
           display: flex;
+          flex-wrap: wrap;
           justify-content: space-between;
           align-items: center;
         }
@@ -205,6 +206,7 @@ const Item = props => {
       <style jsx>{`
         .Item {
           display: flex;
+          flex-wrap: wrap;
           justify-content: space-between;
           align-items: center;
           margin: 25px 0;
