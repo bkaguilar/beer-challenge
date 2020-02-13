@@ -59,8 +59,9 @@ const Card = props => {
         }
 
         img {
-          height: 90%;
+          height: 100%;
           object-fit: cover;
+          filter: drop-shadow(0 16px 10px rgba(0,0,0, 0.6));
         }
 
         .Card__text {

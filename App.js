@@ -27,6 +27,7 @@ const App = props => {
           font-family: "Quicksand", sans-serif;
           line-height: 1.6;
           background: whitesmoke;
+          color: #191919;
         }
 
         a {

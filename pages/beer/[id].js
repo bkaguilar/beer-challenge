@@ -1,6 +1,5 @@
 import App from "../../App";
 import fetch from "isomorphic-unfetch";
-import List from "../../components/List";
 
 const Beer = props => {
   return (
@@ -19,27 +18,35 @@ const Beer = props => {
         </header>
         <div className="Beer__text">
           <section className="Beer__text__description">
-            <h2>Description</h2>
-            <p>{props.page.description}</p>
+            <h2 className="Beer__section__title">Description</h2>
+            <p className="Beer__text__description__content">
+              {props.page.description}
+            </p>
           </section>
           <section className="Beer__text__ingredients">
-            <h2>Ingredients</h2>
+            <h2 className="Beer__section__title">Ingredients</h2>
             <nav className="Beer__text__ingredients__keys">
-              {Object.entries(props.page.ingredients).map(([key, value]) => {
-                return <h3>{key}</h3>;
-              })}
+              <h3>Hops</h3>
+              <h3>Malt</h3>
+              <h3>Methods</h3>
             </nav>
-            {Object.values(props.page.ingredients).map((item, index) => {
-              if (Array.isArray(item)) {
-                return <List key={index} item={item} />;
-              } else {
-                return (
-                  <ul>
-                    <li>{item}</li>
-                  </ul>
-                );
-              }
-            })}
+            <div className="Beer__text__ingredients__content">
+              <ul>
+                {props.page.ingredients.hops.map((item, index) => (
+                  <List key={index} item={item} />
+                ))}
+              </ul>
+              <ul>
+                {props.page.ingredients.malt.map((item, index) => (
+                  <List key={index} item={item} />
+                ))}
+              </ul>
+              <ul>
+                {Object.entries(props.page.method).map(([key]) => (
+                  <li>{key}</li>
+                ))}
+              </ul>
+            </div>
           </section>
         </div>
       </main>
@@ -55,9 +62,10 @@ const Beer = props => {
         .Beer__header {
           z-indez: 2;
           width: 100%;
-          height: 350px;
+          height: 300px;
+          padding: 0 100px;
           display: flex;
-          justify-content: space-around;
+          justify-content: space-between;
         }
 
         .Beer__header__name {
@@ -71,29 +79,55 @@ const Beer = props => {
 
         .Beer__header__image {
           height: 100%;
-          transform: translateY(-20px);
+          transition: all 200ms ease;
+          transform: scale(1.4);
         }
 
         img {
-          height: 400px;
+          height: 100%;
           object-fit: cover;
+          filter: drop-shadow(0 16px 10px rgba(0, 0, 0, 0.6));
         }
 
         .Beer__text {
           z-indez: 1;
           overflow: hidden;
-          padding: 15px;
+          padding: 70px 100px;
           border-top-left-radius: 20px;
           border-top-right-radius: 20px;
           background: white;
         }
 
-        .Beer__text__ingredients__keys {
+        .Beer__section__title {
+          color: #7b829f;
+          font-size: 1.2em;
+          margin-bottom: 30px;
+        }
+
+        .Beer__text__description,
+        .Beer__text__ingredients {
+          margin-bottom: 70px;
+        }
+
+        .Beer__text__ingredients__keys,
+        .Beer__text__ingredients__content {
           display: flex;
           justify-content: space-between;
         }
       `}</style>
     </App>
+  );
+};
+
+const List = props => {
+  return (
+    <ul className="List">
+      <li className="List__item">
+        <span>{props.item.name}</span>
+        <span>{props.item.amount.value}</span>
+        <span>{props.item.amount.unit}</span>
+      </li>
+    </ul>
   );
 };
 
