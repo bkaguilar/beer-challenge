@@ -1,8 +1,16 @@
 import App from "../../App";
 import Button from "../../components/Button";
+import { useState } from "react";
 import fetch from "isomorphic-unfetch";
 
 const Beer = props => {
+  // let ingredients = Object.keys(props.page.ingredients);
+  let ingredients = ["malt", "hops"];
+
+  const [active, setActive] = useState(0);
+  const handleActiveTab = e => {
+    setActive(parseInt(e.currentTarget.attributes.index.value));
+  };
   return (
     <App>
       <main className="Beer">
@@ -27,14 +35,36 @@ const Beer = props => {
           <section className="Beer__text__ingredients">
             <h2 className="Beer__section__title">Ingredients</h2>
             <nav className="Beer__text__ingredients__nav">
-              <a className="Beer__text__ingredients__nav__item itemActive">
-                Hops
-              </a>
-              <a className="Beer__text__ingredients__nav__item">Malt</a>
+              {ingredients.map((item, index) => (
+                <a
+                  key={index}
+                  index={index}
+                  className={
+                    active === index
+                      ? "Beer__text__ingredients__nav__item itemActive"
+                      : "Beer__text__ingredients__nav__item"
+                  }
+                  onClick={handleActiveTab}
+                >
+                  {item}
+                </a>
+              ))}
             </nav>
             <div className="Beer__text__ingredients__content">
-              <IngredientsList ingredient={props.page.ingredients.hops} />
-              <IngredientsList ingredient={props.page.ingredients.malt} />
+              {active === 0 && (
+                <IngredientsList
+                  ingredient={props.page.ingredients.malt}
+                  id="malt"
+                />
+              )}
+
+              {active === 1 && (
+                <IngredientsList
+                  ingredient={props.page.ingredients.hops}
+                  id="hops"
+                />
+              )}
+
               {/* <ul className="methods">
                 {Object.entries(props.page.method).map(([key], index) => (
                   <li key={index}>{key}</li>
@@ -138,6 +168,7 @@ const Beer = props => {
 
         .Beer__text__ingredients__content {
           position: relative;
+          overflow: hidden;
           min-height: 500px;
         }
 
@@ -153,7 +184,7 @@ const Beer = props => {
 const IngredientsList = props => {
   let titleColumn = ["Name", "Amount", "Action"];
   return (
-    <ul className="IngredientsList">
+    <ul id={props.id} className="IngredientsList ">
       <div className="IngredientsList__nav">
         {titleColumn.map((item, index) => (
           <h3 key={index} className="IngredientsList__nav__title">
@@ -174,6 +205,16 @@ const IngredientsList = props => {
           background: white;
           height: 100%;
           padding: 20px 0;
+          transform: translateY(100px);
+          opacity: 0;
+          animation: showTable 1s ease forwards;
+
+          @keyframes showTable {
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
         }
 
         .IngredientsList__nav {
