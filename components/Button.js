@@ -1,11 +1,12 @@
 const Button = props => {
   return (
     <button
-      className={"Button" + props.className}
-      title={props.value}
-      alt={props.value}
+      className="Button"
+      title={props.state === "Done" ? "Ingredient has been used " : props.state}
+      alt={props.state}
+      onClick={props.onClick}
     >
-      {props.value}
+      {props.state}
       <style jsx>{`
         .Button {
           padding: 10px 20px;
@@ -14,13 +15,17 @@ const Button = props => {
           color: white;
           text-transform: capitalize;
           font-weight: bold;
-          background: #3153ac;
-          box-shadow: 0 5px 14px rgba(49, 83, 172, 0.4);
+          background: ${props.state === "IDLE" ? "#3153ac" : "#f2e077"};
+          box-shadow: ${props.state === "IDLE"
+            ? "0 5px 15px rgba(49, 83, 172, 0.4)"
+            : "none"};
           transition: all 400ms ease;
         }
 
         .Button:hover {
-          box-shadow: 0 0 14px rgba(49, 83, 172, 0.4);
+          box-shadow: ${props.state === "IDLE"
+            ? "0 0 15px rgba(49, 83, 172, 0.4)"
+            : "0 0 15px rgba(242, 224, 119, 0.4)"};
         }
       `}</style>
     </button>

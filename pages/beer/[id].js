@@ -5,13 +5,18 @@ import { useState } from "react";
 import fetch from "isomorphic-unfetch";
 
 const Beer = props => {
-  // let ingredients = Object.keys(props.page.ingredients);
-  let ingredients = ["malt", "hops"];
+  let ingredients = Object.keys(props.page.ingredients);
 
   const [active, setActive] = useState(0);
+  const [state, setState] = useState("IDLE");
+
   const handleActiveTab = e => {
     setActive(parseInt(e.currentTarget.attributes.index.value));
   };
+
+  // const handleChangeState = e => {
+  //   setState("Done");
+  // };
   return (
     <App>
       <main className="Beer">
@@ -32,16 +37,16 @@ const Beer = props => {
               {props.page.description}
             </p>
           </Section>
-          <Section name="Beers">
-            <nav className="Beer__text__beers__nav">
+          <Section name="Ingredients">
+            <nav className="Beer__text__ingredients__nav">
               {ingredients.map((item, index) => (
                 <a
                   key={index}
                   index={index}
                   className={
                     active === index
-                      ? "Beer__text__beers__nav__item itemActive"
-                      : "Beer__text__beers__nav__item"
+                      ? "Beer__text__ingredients__nav__item itemActive"
+                      : "Beer__text__ingredients__nav__item"
                   }
                   onClick={handleActiveTab}
                 >
@@ -49,7 +54,7 @@ const Beer = props => {
                 </a>
               ))}
             </nav>
-            <div className="Beer__text__beers__content">
+            <div className="Beer__text__ingredients__content">
               {active === 0 && (
                 <IngredientsList
                   ingredient={props.page.ingredients.malt}
@@ -115,11 +120,11 @@ const Beer = props => {
           background: white;
         }
 
-        .Beer__text__beers__nav {
+        .Beer__text__ingredients__nav {
           display: flex;
         }
 
-        .Beer__text__beers__nav__item {
+        .Beer__text__ingredients__nav__item {
           position: relative;
           cursor: pointer;
           text-transform: capitalize;
@@ -131,7 +136,7 @@ const Beer = props => {
           border-bottom: 3px solid transparent;
         }
 
-        .Beer__text__beers__nav__item::before {
+        .Beer__text__ingredients__nav__item::before {
           content: "";
           position: absolute;
           top: 50%;
@@ -145,11 +150,11 @@ const Beer = props => {
           background: rgba(241, 108, 81, 0.2);
         }
 
-        .Beer__text__beers__nav__item:hover::before {
+        .Beer__text__ingredients__nav__item:hover::before {
           transform: translate(-50%, -50%) scaleY(1);
         }
 
-        .Beer__text__beers__content {
+        .Beer__text__ingredients__content {
           position: relative;
           overflow: hidden;
           min-height: 500px;
@@ -167,7 +172,7 @@ const Beer = props => {
 const IngredientsList = props => {
   let titleColumn = ["Name", "Amount", "Action"];
   return (
-    <ul id={props.id} className="IngredientsList ">
+    <ul id={props.id} className="IngredientsList">
       <div className="IngredientsList__nav">
         {titleColumn.map((item, index) => (
           <h3 key={index} className="IngredientsList__nav__title">
@@ -175,9 +180,9 @@ const IngredientsList = props => {
           </h3>
         ))}
       </div>
-      {props.ingredient.map((item, index) => (
-        <Item key={index} item={item} />
-      ))}
+      {props.ingredient.map((item, index) => {
+        return <Item key={index} item={item} />;
+      })}
 
       <style jsx>{`
         .IngredientsList {
@@ -218,14 +223,25 @@ const IngredientsList = props => {
 };
 
 const Item = props => {
+  const [state, setState] = useState("IDLE");
+
+  const handleChangeState = e => {
+    if (props.item.add === "middle") return;
+    setState("Done");
+  };
+
   return (
-    <li className="Item">
+    <li
+      className="Item"
+      data-add={props.item.add && props.item.add}
+      state={state}
+    >
       <span className="Item__name">{props.item.name}</span>
       <span className="Item__value">
         {props.item.amount.value + " " + props.item.amount.unit}
       </span>
       <span>
-        <Button value="Done" className=" Button--ingredients" />{" "}
+        <Button state={state} onClick={handleChangeState} />
       </span>
       <style jsx>{`
         .Item {
