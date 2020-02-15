@@ -6,12 +6,22 @@ import fetch from "isomorphic-unfetch";
 
 const Beer = props => {
   let ingredients = Object.keys(props.page.ingredients);
+  let methods = Object.keys(props.page.method);
 
   const [active, setActive] = useState(0);
+  const [methodActive, setMethodActive] = useState(0);
 
   const handleActiveTab = e => {
     setActive(parseInt(e.currentTarget.attributes.index.value));
   };
+
+  const handleMethodActiveTab = e => {
+    setMethodActive(parseInt(e.currentTarget.attributes.index.value));
+  };
+
+  Object.entries(props.page.method).map(item => {
+    console.log(item);
+  });
 
   return (
     <App>
@@ -34,15 +44,15 @@ const Beer = props => {
             </p>
           </Section>
           <Section name="Ingredients">
-            <nav className="Beer__text__ingredients__nav">
+            <nav className="Beer__text__nav">
               {ingredients.map((item, index) => (
                 <a
                   key={index}
                   index={index}
                   className={
                     active === index
-                      ? "Beer__text__ingredients__nav__item itemActive"
-                      : "Beer__text__ingredients__nav__item"
+                      ? "Beer__text__nav__item itemActive"
+                      : "Beer__text__nav__item"
                   }
                   onClick={handleActiveTab}
                 >
@@ -50,7 +60,7 @@ const Beer = props => {
                 </a>
               ))}
             </nav>
-            <div className="Beer__text__ingredients__content">
+            <div className="Beer__text__content">
               {active === 0 && (
                 <IngredientsList
                   ingredient={props.page.ingredients.malt}
@@ -64,9 +74,66 @@ const Beer = props => {
                   id="hops"
                 />
               )}
+              {active === 2 && <span>{props.page.ingredients.yeast}</span>}
             </div>
           </Section>
-          <Section name="Methods"></Section>
+          <Section name="Methods">
+            <nav className="Beer__text__nav">
+              {methods.map((item, index) => {
+                return (
+                  <a
+                    key={index}
+                    index={index}
+                    onClick={handleMethodActiveTab}
+                    className={
+                      methodActive === index
+                        ? "Beer__text__nav__item itemActive"
+                        : "Beer__text__nav__item"
+                    }
+                  >
+                    {item}
+                  </a>
+                );
+              })}
+            </nav>
+            <div className="Beer__text__content">
+              {methodActive === 0 &&
+                props.page.method.mash_temp.map((item, index) => {
+                  return (
+                    <ul className="IngredientsList">
+                      <li>{item.temp.value + item.temp.unit}</li>
+                      <li>{item.duration}</li>
+                      <Button
+                        name="mash_temp"
+                        state={props.state}
+                        onClick={props.onClick}
+                      />
+                    </ul>
+                  );
+                })}
+
+              {methodActive === 1 && (
+                <ul className="IngredientsList">
+                  <li>
+                    {props.page.method.fermentation.temp.value +
+                      props.page.method.fermentation.temp.unit}
+                  </li>
+                  <Button name="fermentation" />
+                </ul>
+              )}
+
+              {methodActive === 2 && (
+                <ul>
+                  <li>
+                    {props.page.method.twist
+                      ? props.page.method.twist
+                      : "No need to twist"}
+                  </li>
+                  <Button name="twist" />
+                </ul>
+              )}
+            </div>
+          </Section>
         </div>
       </main>
       <style jsx>{`
@@ -116,11 +183,11 @@ const Beer = props => {
           background: white;
         }
 
-        .Beer__text__ingredients__nav {
+        .Beer__text__nav {
           display: flex;
         }
 
-        .Beer__text__ingredients__nav__item {
+        .Beer__text__nav__item {
           position: relative;
           cursor: pointer;
           text-transform: capitalize;
@@ -132,7 +199,7 @@ const Beer = props => {
           border-bottom: 3px solid transparent;
         }
 
-        .Beer__text__ingredients__nav__item::before {
+        .Beer__text__nav__item::before {
           content: "";
           position: absolute;
           top: 50%;
@@ -146,11 +213,11 @@ const Beer = props => {
           background: rgba(241, 108, 81, 0.2);
         }
 
-        .Beer__text__ingredients__nav__item:hover::before {
+        .Beer__text__nav__item:hover::before {
           transform: translate(-50%, -50%) scaleY(1);
         }
 
-        .Beer__text__ingredients__content {
+        .Beer__text__content {
           position: relative;
           overflow: hidden;
           min-height: 500px;
