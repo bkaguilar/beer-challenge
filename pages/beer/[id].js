@@ -181,6 +181,8 @@ const IngredientsList = props => {
       !add
     ) {
       setIsDone({ [e.target.attributes.name.value]: true, ...isDone });
+    } else {
+      alert("Ingredient can`t be done until all ingredients are done");
     }
   };
 
