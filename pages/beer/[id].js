@@ -1,22 +1,18 @@
 import App from "../../App";
 import Button from "../../components/Button";
 import Section from "../../components/Section";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import fetch from "isomorphic-unfetch";
 
 const Beer = props => {
   let ingredients = Object.keys(props.page.ingredients);
 
   const [active, setActive] = useState(0);
-  const [state, setState] = useState("IDLE");
 
   const handleActiveTab = e => {
     setActive(parseInt(e.currentTarget.attributes.index.value));
   };
 
-  // const handleChangeState = e => {
-  //   setState("Done");
-  // };
   return (
     <App>
       <main className="Beer">
@@ -171,6 +167,17 @@ const Beer = props => {
 
 const IngredientsList = props => {
   let titleColumn = ["Name", "Amount", "Action"];
+
+  const [isDone, setIsDone] = useState({});
+
+  const handleChange = e => {
+    setIsDone({
+      ...isDone,
+      [e.target.attributes.name.value]: true
+    });
+
+    console.log(isDone);
+  };
   return (
     <ul id={props.id} className="IngredientsList">
       <div className="IngredientsList__nav">
@@ -181,7 +188,15 @@ const IngredientsList = props => {
         ))}
       </div>
       {props.ingredient.map((item, index) => {
-        return <Item key={index} item={item} />;
+        return (
+          <Item
+            key={index}
+            name={item.name + index}
+            item={item}
+            onClick={handleChange}
+            state={isDone[`${item.name + index}`]}
+          />
+        );
       })}
 
       <style jsx>{`
@@ -223,25 +238,14 @@ const IngredientsList = props => {
 };
 
 const Item = props => {
-  const [state, setState] = useState("IDLE");
-
-  const handleChangeState = e => {
-    if (props.item.add === "middle") return;
-    setState("Done");
-  };
-
   return (
-    <li
-      className="Item"
-      data-add={props.item.add && props.item.add}
-      state={state}
-    >
+    <li className="Item" data-add={props.item.add && props.item.add}>
       <span className="Item__name">{props.item.name}</span>
       <span className="Item__value">
         {props.item.amount.value + " " + props.item.amount.unit}
       </span>
       <span>
-        <Button state={state} onClick={handleChangeState} />
+        <Button name={props.name} state={props.state} onClick={props.onClick} />
       </span>
       <style jsx>{`
         .Item {
