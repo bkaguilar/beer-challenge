@@ -167,17 +167,44 @@ const Beer = props => {
 
 const IngredientsList = props => {
   let titleColumn = ["Name", "Amount", "Action"];
-
   const [isDone, setIsDone] = useState({});
 
-  const handleChange = e => {
-    setIsDone({
-      ...isDone,
-      [e.target.attributes.name.value]: true
-    });
+  let startArray = [];
+  let middleArray = [];
 
-    console.log(isDone);
+  const handleChange = e => {
+    let add = e.target.parentNode.parentNode.dataset.add;
+    if (
+      add === "start" ||
+      (add === "middle" && startArray.every(isTrue)) ||
+      (add === "end" && middleArray.every(isTrue)) ||
+      !add
+    ) {
+      setIsDone({ [e.target.attributes.name.value]: true, ...isDone });
+    }
   };
+
+  const isTrue = (el, index, arr) => {
+    return el.props.state;
+  };
+
+  let list = props.ingredient.map((item, index) => {
+    return (
+      <Item
+        key={index}
+        name={item.name + index}
+        item={item}
+        onClick={handleChange}
+        state={isDone[`${item.name + index}`]}
+      />
+    );
+  });
+
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].props.item.add === "start") startArray.push(list[i]);
+    if (list[i].props.item.add === "middle") middleArray.push(list[i]);
+  }
+
   return (
     <ul id={props.id} className="IngredientsList">
       <div className="IngredientsList__nav">
@@ -187,18 +214,7 @@ const IngredientsList = props => {
           </h3>
         ))}
       </div>
-      {props.ingredient.map((item, index) => {
-        return (
-          <Item
-            key={index}
-            name={item.name + index}
-            item={item}
-            onClick={handleChange}
-            state={isDone[`${item.name + index}`]}
-          />
-        );
-      })}
-
+      {list}
       <style jsx>{`
         .IngredientsList {
           position: absolute;
@@ -239,7 +255,7 @@ const IngredientsList = props => {
 
 const Item = props => {
   return (
-    <li className="Item" data-add={props.item.add && props.item.add}>
+    <li className="Item" data-add={props.item.add} data-state={props.state}>
       <span className="Item__name">{props.item.name}</span>
       <span className="Item__value">
         {props.item.amount.value + " " + props.item.amount.unit}
