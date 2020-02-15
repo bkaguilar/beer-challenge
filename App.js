@@ -48,6 +48,11 @@ const App = props => {
           max-width: 1300px;
           margin: 0 auto;
         }
+
+        .section__content {
+          position: relative;
+          min-height: 500px;
+        }
       `}</style>
     </div>
   );
