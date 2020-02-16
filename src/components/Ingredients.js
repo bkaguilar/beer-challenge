@@ -26,8 +26,30 @@ const Ingredients = props => {
         {ingredientActive === 1 && (
           <IngredientsList ingredient={props.page.ingredients.hops} id="hops" />
         )}
-        {ingredientActive === 2 && <span>{props.page.ingredients.yeast}</span>}
+        {ingredientActive === 2 && (
+          <ul>
+            <li className="Item Item__twist">
+              <span>{props.page.ingredients.yeast}</span>
+            </li>
+          </ul>
+        )}
       </div>
+      <style jsx>{`
+        .Item {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          align-items: center;
+          margin: 25px 0;
+          padding: 15px 0;
+          border-bottom: 0.3px solid rgba(123, 130, 159, 0.5);
+        }
+
+        .Item__twist span {
+          text-align: left;
+          min-width: 100%;
+        }
+      `}</style>
     </Section>
   );
 };
@@ -41,7 +63,6 @@ const IngredientsList = props => {
 
   const handleChange = e => {
     let add = e.target.parentNode.parentNode.dataset.add;
-    console.log(add);
     if (
       add === "start" ||
       (add === "middle" && startArray.every(isTrue)) ||

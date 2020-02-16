@@ -43,7 +43,7 @@ const Nav = props => (
           width: 100%;
           height: 100%;
           border-radius: 4px;
-          background: rgba(241, 108, 81, 0.2);
+          background: rgba(241, 108, 81, 0.1);
         }
 
         .Nav__tab:hover::before {

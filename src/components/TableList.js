@@ -11,10 +11,6 @@ const TableList = props => {
       {props.children}
       <style jsx>{`
         .TableList {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
           background: white;
           height: 100%;
           padding: 20px 0;

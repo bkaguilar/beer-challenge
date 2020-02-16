@@ -70,28 +70,28 @@ const Methods = props => {
         tabActive={methodActive}
       />
       <div className="section__content">
-        <TableList titleColumn={titleColumn}>
-          {methodActive === 0 &&
-            props.page.method.mash_temp.map((item, index) => {
-              return (
-                <li className="Item" key={index}>
-                  <span>{item.temp.value + item.temp.unit}</span>
-                  <span>{item.duration}</span>
-                  <span>
-                    <Button
-                      name={"mash_temp" + index}
-                      duration={item.duration}
-                      state={isDone["mash_temp" + index]}
-                      running={isRunning["mash_temp" + index]}
-                      pause={isPause["mash_temp" + index]}
-                      onClick={handleChange}
-                    />
-                  </span>
-                </li>
-              );
-            })}
-
-          {methodActive === 1 && (
+        {methodActive === 0 && (
+          <TableList titleColumn={titleColumn}>
+            {props.page.method.mash_temp.map((item, index) => (
+              <li className="Item" key={index}>
+                <span>{item.temp.value + item.temp.unit}</span>
+                <span>{item.duration}</span>
+                <span>
+                  <Button
+                    name={"mash_temp" + index}
+                    duration={item.duration}
+                    state={isDone["mash_temp" + index]}
+                    running={isRunning["mash_temp" + index]}
+                    pause={isPause["mash_temp" + index]}
+                    onClick={handleChange}
+                  />
+                </span>
+              </li>
+            ))}
+          </TableList>
+        )}
+        {methodActive === 1 && (
+          <TableList titleColumn={titleColumn}>
             <li className="Item">
               <span>
                 {props.page.method.fermentation.temp.value +
@@ -105,27 +105,20 @@ const Methods = props => {
                 />
               </span>
             </li>
-          )}
+          </TableList>
+        )}
 
-          {methodActive === 2 && (
-            <li className="Item">
+        {methodActive === 2 && (
+          <ul>
+            <li className="Item Item__twist">
               <span>
                 {props.page.method.twist
                   ? props.page.method.twist
                   : "No need to twist"}
               </span>
-              {props.page.method.twist && (
-                <span>
-                  <Button
-                    name="twist"
-                    state={isDone["twist"]}
-                    onClick={handleChange}
-                  />
-                </span>
-              )}
             </li>
-          )}
-        </TableList>
+          </ul>
+        )}
       </div>
       <style jsx>{`
         .Item {
@@ -136,6 +129,11 @@ const Methods = props => {
           margin: 25px 0;
           padding: 15px 0;
           border-bottom: 0.3px solid rgba(123, 130, 159, 0.5);
+        }
+
+        .Item__twist span {
+          text-align: left;
+          min-width: 100%;
         }
 
         span {

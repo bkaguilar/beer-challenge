@@ -23,7 +23,6 @@ const App = props => {
         }
 
         body {
-          // background: #e8eff6;
           font-family: "Quicksand", sans-serif;
           line-height: 1.6;
           background: whitesmoke;
@@ -51,7 +50,7 @@ const App = props => {
 
         .section__content {
           position: relative;
-          min-height: 500px;
+          min-height: 300px;
         }
       `}</style>
     </div>

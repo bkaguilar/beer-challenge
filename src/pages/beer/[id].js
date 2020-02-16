@@ -12,7 +12,10 @@ const Beer = props => {
           <div>
             <h1 className="Beer__header__name">{props.page.name}</h1>
             <span className="Beer__header__tagline">{props.page.tagline}</span>
-            <span title="Alcohol By Volume">{props.page.abv}</span>
+            <div className="Beer__header__ABV" title="Alcohol By Volume">
+              <span>Alcohol By Volume:</span>
+              {props.page.abv}
+            </div>
           </div>
           <figure className="Beer__header__image">
             <img src={props.page.image_url} alt="" />
@@ -33,31 +36,61 @@ const Beer = props => {
           display: flex;
           flex-direction: column;
           align-items: center;
-          background: #f9cb38;
-          padding-top: 70px;
+          background: linear-gradient(to top, #f9cb38 89%, #be9200);
+          padding-top: 50px;
         }
 
         .Beer__header {
+          position: relative;
           width: 100%;
-          height: 300px;
+          max-height: 400px;
           padding: 0 100px;
           display: flex;
+          align-items: center;
           justify-content: space-between;
         }
 
         .Beer__header__name {
           color: #191919;
-          font-size: 5.2em;
+          margin-bottom: 30px;
+          font-size: 5em;
+          line-height: 1.2;
         }
 
         .Beer__header__tagline {
           font-style: italic;
+          color: white;
+          font-size: 1.3em;
+          padding: 10px;
+          margin: 10px 0;
+          background: #191919;
+        }
+
+        .Beer__header__ABV {
+          position: absolute;
+          bottom: -25px;
+          padding: 10px;
+          display: block;
+          border-radius: 8px;
+          width: 200px;
+          font-size: 1.3em;
+          font-weight: bold;
+          box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.3);
+          background: white;
+          color: #f16c51;
+        }
+
+        .Beer__header__ABV span {
+          padding-right: 10px;
+          font-size: 0.7em;
+          font-weight: normal;
+          color: #191919;
         }
 
         .Beer__header__image {
-          height: 100%;
+          transform: translate(-100px, 50px);
+          height: 500px;
           transition: all 200ms ease;
-          transform: scale(1.4);
         }
 
         img {
