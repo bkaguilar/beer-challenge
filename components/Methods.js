@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Section from "./Section";
 import Nav from "./Nav";
 import Button from "./Button";
@@ -9,16 +9,59 @@ const Methods = props => {
   let titleColumn = ["Temperature", "Duration", "Action"];
   const [methodActive, setMethodActive] = useState(0);
   const [isDone, setIsDone] = useState({});
+  const [isPause, setIsPause] = useState({});
+  const [isRunning, setIsRunning] = useState({});
 
   const handleMethodActiveTab = e => {
     setMethodActive(parseInt(e.currentTarget.attributes.index.value));
   };
 
   const handleChange = e => {
-    console.log(isDone);
-    setIsDone({ [e.target.attributes.name.value]: true, ...isDone });
-  };
+    let duration = parseInt(e.target.attributes.duration.value);
+    let time = 0;
 
+    const timing = e => {
+      let target = e.target.attributes.name.value;
+      setInterval(() => {
+        if (time === duration) {
+          clearInterval(timing);
+          setIsRunning({ [target]: false });
+          setIsDone({ [target]: true });
+        } else {
+          time++;
+          console.log("time = " + time);
+        }
+      }, 1000);
+    };
+
+    if (
+      !isRunning[e.target.attributes.name.value] &&
+      !isPause[e.target.attributes.name.value] &&
+      !isDone[e.target.attributes.name.value]
+    ) {
+      setIsRunning({ ...isRunning, [e.target.attributes.name.value]: true });
+      timing(e);
+    }
+    if (
+      isRunning[e.target.attributes.name.value] &&
+      !isPause[e.target.attributes.name.value] &&
+      !isDone[e.target.attributes.name.value]
+    ) {
+      clearInterval(timing);
+      setIsPause({ ...isPause, [e.target.attributes.name.value]: true });
+      setIsRunning({ ...isRunning, [e.target.attributes.name.value]: false });
+    }
+    if (
+      !isRunning[e.target.attributes.name.value] &&
+      isPause[e.target.attributes.name.value] &&
+      !isDone[e.target.attributes.name.value]
+    ) {
+      timing();
+      setIsPause({ ...isPause, [e.target.attributes.name.value]: false });
+      setIsRunning({ ...isRunning, [e.target.attributes.name.value]: true });
+      setIsDone({ ...isDone, [e.target.attributes.name.value]: false });
+    }
+  };
   return (
     <Section name="Methods">
       <Nav
@@ -36,8 +79,11 @@ const Methods = props => {
                   <span>{item.duration}</span>
                   <span>
                     <Button
-                      name="mash_temp"
-                      state={isDone["mash_temp"]}
+                      name={"mash_temp" + index}
+                      duration={item.duration}
+                      state={isDone["mash_temp" + index]}
+                      running={isRunning["mash_temp" + index]}
+                      pause={isPause["mash_temp" + index]}
                       onClick={handleChange}
                     />
                   </span>
