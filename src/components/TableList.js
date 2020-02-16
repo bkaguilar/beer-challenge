@@ -38,6 +38,12 @@ const TableList = props => {
         h3 {
           max-width: 33%;
         }
+
+        @media only screen and (max-width: 768px) {
+          .TableList__nav {
+            font-size: 0.7em;
+          }
+        }
       `}</style>
     </ul>
   );

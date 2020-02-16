@@ -1,14 +1,14 @@
 import fetch from "isomorphic-unfetch";
 import Link from "next/link";
 import App from "../App";
-import Card from "../components/Card";
+import Card from "../../components/Card";
 
 const index = props => {
   return (
     <App>
       <Header />
       <main className="Beers">
-        {props.responseData.map((card, index) => (
+        {props.responseData.map(card => (
           <Link key={card.id} href="/beer/[id]" as={`/beer/${card.id}`}>
             <a>
               <Card card={card} />
@@ -24,12 +24,6 @@ const index = props => {
           place-items: center;
           justify-content: center;
           grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-        }
-
-        @media only screen and (max-width: 768px) {
-          .Beers {
-            padding: 20px;
-          }
         }
       `}</style>
     </App>
@@ -49,11 +43,6 @@ const Header = () => {
         .Header__title {
           font-size: 3em;
           color: #7b829f;
-        }
-        @media only screen and (max-width: 768px) {
-          .Header {
-            padding: 20px;
-          }
         }
       `}</style>
     </header>

@@ -9,7 +9,7 @@ const Beer = props => {
     <App>
       <main className="Beer">
         <header className="Beer__header">
-          <div>
+          <div className="Beer__header__text">
             <h1 className="Beer__header__name">{props.page.name}</h1>
             <span className="Beer__header__tagline">{props.page.tagline}</span>
             <div className="Beer__header__ABV" title="Alcohol By Volume">
@@ -72,7 +72,7 @@ const Beer = props => {
           padding: 10px;
           display: block;
           border-radius: 8px;
-          width: 200px;
+          width: auto;
           font-size: 1.3em;
           font-weight: bold;
           box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.3);
@@ -106,6 +106,42 @@ const Beer = props => {
           border-top-left-radius: 20px;
           border-top-right-radius: 20px;
           background: white;
+        }
+
+        @media only screen and (max-width: 768px) {
+          .Beer {
+            padding: 50px 20px;
+          }
+
+          .Beer__header {
+            max-height: none;
+            padding: 0 20px 30px 20px;
+            flex-direction: column;
+          }
+
+          .Beer__header__text {
+            text-align: center;
+          }
+
+          .Beer__header__name {
+            font-size: 4em;
+            line-height: 1;
+          }
+          .Beer__header__ABV {
+            font-size: 1.1em;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+
+          .Beer__header__image {
+            margin: 50px 0;
+            height: 250px;
+            transform: none;
+          }
+
+          .Beer__text {
+            padding: 50px 20px 20px 20px;
+          }
         }
       `}</style>
     </App>

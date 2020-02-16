@@ -147,6 +147,12 @@ const Methods = props => {
         span:last-of-type {
           text-align: right;
         }
+
+        @media only screen and (max-width: 768px) {
+          .Item {
+            font-size: 0.9em;
+          }
+        }
       `}</style>
     </Section>
   );

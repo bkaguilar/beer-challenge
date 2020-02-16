@@ -49,6 +49,11 @@ const Ingredients = props => {
           text-align: left;
           min-width: 100%;
         }
+        @media only screen and (max-width: 768px) {
+          .Item {
+            font-size: 0.9em;
+          }
+        }
       `}</style>
     </Section>
   );
@@ -135,6 +140,12 @@ const Item = props => {
 
         span:last-of-type {
           text-align: right;
+        }
+
+        @media only screen and (max-width: 768px) {
+          .Item {
+            font-size: 0.9em;
+          }
         }
       `}</style>
     </li>

@@ -54,6 +54,19 @@ const Nav = props => (
           color: #f16c51;
           border-bottom-color: #f16c51;
         }
+
+        @media only screen and (max-width: 768px) {
+          .Nav {
+            overflow-x: scroll;
+            -webkit-overflow-scrolling: touch;
+          }
+          .Nav::-webkit-scrollbar {
+            display: none;
+          }
+          .Nav__tab {
+            margin-right: 20px;
+          }
+        }
       `}
     </style>
   </nav>

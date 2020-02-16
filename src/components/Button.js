@@ -34,6 +34,12 @@ const Button = props => {
             ? "0 0 15px rgba(242, 224, 119, 0.4)"
             : "0 0 15px rgba(49, 83, 172, 0.4)"};
         }
+
+        @media only screen and (max-width: 768px) {
+          .Button {
+            min-width: 80px;
+          }
+        }
       `}</style>
     </button>
   );
