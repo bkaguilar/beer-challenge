@@ -17,8 +17,14 @@ const Methods = props => {
   };
 
   const handleChange = e => {
-    let duration = parseInt(e.target.attributes.duration.value);
+    let duration;
     let time = 0;
+
+    if (e.target.hasAttribute("duration")) {
+      duration = parseInt(e.target.attributes.duration.value);
+    } else {
+      setIsDone({ [e.target.attributes.name.value]: true });
+    }
 
     const timing = e => {
       let target = e.target.attributes.name.value;
@@ -62,99 +68,70 @@ const Methods = props => {
       setIsDone({ ...isDone, [e.target.attributes.name.value]: false });
     }
   };
+
   return (
     <Section name="Methods">
       <Nav
-        table={methods}
+        tableTab={methods}
         onClick={handleMethodActiveTab}
         tabActive={methodActive}
       />
       <div className="section__content">
         {methodActive === 0 && (
-          <TableList titleColumn={titleColumn}>
+          <TableList id="mash_temp" titleColumn={titleColumn}>
             {props.page.method.mash_temp.map((item, index) => (
-              <li className="Item" key={index}>
+              <Item
+                key={index}
+                name={"mash_temp" + index}
+                duration={item.duration}
+                state={isDone["mash_temp" + index]}
+                running={isRunning["mash_temp" + index]}
+                pause={isPause["mash_temp" + index]}
+                onClick={handleChange}
+              >
                 <span>{item.temp.value + item.temp.unit}</span>
                 <span>{item.duration}</span>
-                <span>
-                  <Button
-                    name={"mash_temp" + index}
-                    duration={item.duration}
-                    state={isDone["mash_temp" + index]}
-                    running={isRunning["mash_temp" + index]}
-                    pause={isPause["mash_temp" + index]}
-                    onClick={handleChange}
-                  />
-                </span>
-              </li>
+              </Item>
             ))}
           </TableList>
         )}
         {methodActive === 1 && (
-          <TableList titleColumn={titleColumn}>
-            <li className="Item">
+          <TableList id="fermentation" titleColumn={titleColumn}>
+            <Item
+              name="fermentation"
+              state={isDone["fermentation"]}
+              onClick={handleChange}
+            >
               <span>
                 {props.page.method.fermentation.temp.value +
                   props.page.method.fermentation.temp.unit}
               </span>
-              <span>
-                <Button
-                  name="fermentation"
-                  state={isDone["fermentation"]}
-                  onClick={handleChange}
-                />
-              </span>
-            </li>
+            </Item>
           </TableList>
         )}
 
         {methodActive === 2 && (
-          <ul>
-            <li className="Item Item__twist">
+          <TableList id="fermentation">
+            <Item className="Item--twist" name="fermentation" methodActive={2}>
               <span>
                 {props.page.method.twist
                   ? props.page.method.twist
                   : "No need to twist"}
               </span>
-            </li>
-          </ul>
+            </Item>
+          </TableList>
         )}
       </div>
-      <style jsx>{`
-        .Item {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
-          align-items: center;
-          margin: 25px 0;
-          padding: 15px 0;
-          border-bottom: 0.3px solid rgba(123, 130, 159, 0.5);
-        }
-
-        .Item__twist span {
-          text-align: left;
-          min-width: 100%;
-        }
-
-        span {
-          width: 33%;
-        }
-
-        span:nth-of-type(2) {
-          text-align: center;
-        }
-
-        span:last-of-type {
-          text-align: right;
-        }
-
-        @media only screen and (max-width: 768px) {
-          .Item {
-            font-size: 0.9em;
-          }
-        }
-      `}</style>
     </Section>
+  );
+};
+
+const Item = props => {
+  return (
+    <li className={"Item " + props.className}>
+      {props.children}
+      <span>{props.methodActive != 2 && <Button {...props} />}</span>
+    </li>
   );
 };
 

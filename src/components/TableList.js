@@ -2,11 +2,12 @@ const TableList = props => {
   return (
     <ul id={props.id} className="TableList">
       <div className="TableList__nav">
-        {props.titleColumn.map((item, index) => (
-          <h3 key={index} className="TableList__nav__title">
-            {item}
-          </h3>
-        ))}
+        {props.titleColumn &&
+          props.titleColumn.map((item, index) => (
+            <h3 key={index} className="TableList__nav__title">
+              {item}
+            </h3>
+          ))}
       </div>
       {props.children}
       <style jsx>{`

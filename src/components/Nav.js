@@ -1,6 +1,6 @@
 const Nav = props => (
   <nav className="Nav">
-    {props.table.map((item, index) => {
+    {props.tableTab.map((item, index) => {
       return (
         <a
           key={index}
