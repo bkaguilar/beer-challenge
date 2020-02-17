@@ -42,7 +42,7 @@ const Nav = props => (
           transition: transform 200ms ease;
           width: 100%;
           height: 100%;
-          border-radius: 4px;
+          border-radius: 5px;
           background: rgba(241, 108, 81, 0.1);
         }
 

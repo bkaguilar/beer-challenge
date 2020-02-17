@@ -8,19 +8,7 @@ const Beer = props => {
   return (
     <App>
       <main className="Beer">
-        <header className="Beer__header">
-          <div className="Beer__header__text">
-            <h1 className="Beer__header__name">{props.page.name}</h1>
-            <span className="Beer__header__tagline">{props.page.tagline}</span>
-            <div className="Beer__header__ABV" title="Alcohol By Volume">
-              <span>Alcohol By Volume:</span>
-              {props.page.abv}
-            </div>
-          </div>
-          <figure className="Beer__header__image">
-            <img src={props.page.image_url} alt="" />
-          </figure>
-        </header>
+        <BeerHeader {...props} />
         <div className="Beer__text">
           <Section name="Description">
             <p className="Beer__text__description__content">
@@ -40,7 +28,45 @@ const Beer = props => {
           padding-top: 50px;
         }
 
-        .Beer__header {
+        .Beer__text {
+          width: 100%;
+          overflow: hidden;
+          padding: 70px 100px;
+          border-top-left-radius: 20px;
+          border-top-right-radius: 20px;
+          background: white;
+        }
+
+        @media only screen and (max-width: 768px) {
+          .Beer {
+            padding: 50px 20px;
+          }
+
+          .Beer__text {
+            padding: 50px 20px 20px 20px;
+          }
+        }
+      `}</style>
+    </App>
+  );
+};
+
+const BeerHeader = props => {
+  return (
+    <header className="BeerHeader">
+      <div className="BeerHeader__text">
+        <h1 className="BeerHeader__name">{props.page.name}</h1>
+        <span className="BeerHeader__tagline">{props.page.tagline}</span>
+        <div className="BeerHeader__ABV" title="Alcohol By Volume">
+          <span>Alcohol By Volume:</span>
+          {props.page.abv}
+        </div>
+      </div>
+      <figure className="BeerHeader__image">
+        <img src={props.page.image_url} alt="" />
+      </figure>
+      <style jsx>{`
+        .BeerHeader {
           position: relative;
           width: 100%;
           max-height: 400px;
@@ -50,7 +76,7 @@ const Beer = props => {
           justify-content: space-between;
         }
 
-        .Beer__header__name {
+        .BeerHeader__name {
           color: #191919;
           margin-bottom: 30px;
           font-size: 5em;
@@ -58,7 +84,7 @@ const Beer = props => {
           font-family: "Lora", san-serif;
         }
 
-        .Beer__header__tagline {
+        .BeerHeader__tagline {
           font-style: italic;
           color: white;
           font-size: 1.3em;
@@ -67,12 +93,12 @@ const Beer = props => {
           background: #191919;
         }
 
-        .Beer__header__ABV {
+        .BeerHeader__ABV {
           position: absolute;
           bottom: -25px;
           padding: 10px;
           display: block;
-          border-radius: 8px;
+          border-radius: 5px;
           width: auto;
           font-size: 1.3em;
           font-weight: bold;
@@ -81,14 +107,14 @@ const Beer = props => {
           color: #f16c51;
         }
 
-        .Beer__header__ABV span {
+        .BeerHeader__ABV span {
           padding-right: 10px;
           font-size: 0.7em;
           font-weight: normal;
           color: #191919;
         }
 
-        .Beer__header__image {
+        .BeerHeader__image {
           transform: translate(-100px, 50px);
           height: 500px;
           transition: all 200ms ease;
@@ -110,44 +136,37 @@ const Beer = props => {
         }
 
         @media only screen and (max-width: 768px) {
-          .Beer {
-            padding: 50px 20px;
-          }
-
-          .Beer__header {
+          .BeerHeader {
             max-height: none;
             padding: 0 20px 30px 20px;
             flex-direction: column;
           }
 
-          .Beer__header__text {
+          .BeerHeader__text {
             text-align: center;
           }
 
-          .Beer__header__name {
+          .BeerHeader__name {
             font-size: 5.4em;
             line-height: 1;
           }
-          .Beer__header__ABV {
+          .BeerHeader__ABV {
             font-size: 1.1em;
             left: 50%;
             transform: translateX(-50%);
           }
 
-          .Beer__header__image {
+          .BeerHeader__image {
             margin: 50px 0;
             height: 250px;
             transform: none;
           }
-
-          .Beer__text {
-            padding: 50px 20px 20px 20px;
-          }
         }
       `}</style>
-    </App>
+    </header>
   );
 };
+
 Beer.getInitialProps = async function(context) {
   const { id } = context.query;
   const res = await fetch(`https://api.punkapi.com/v2/beers/${id}`);
