@@ -16,7 +16,7 @@ const Ingredients = props => {
   return (
     <Section name="Ingredients">
       <Nav
-        table={ingredients}
+        tableTab={ingredients}
         onClick={handleIngredientActiveTab}
         tabActive={ingredientActive}
       />
@@ -24,9 +24,11 @@ const Ingredients = props => {
         {ingredientActive === 0 && (
           <IngredientsList ingredient={props.page.ingredients.malt} id="malt" />
         )}
+
         {ingredientActive === 1 && (
           <IngredientsList ingredient={props.page.ingredients.hops} id="hops" />
         )}
+
         {ingredientActive === 2 && (
           <ul>
             <li className="Item Item__twist">
