@@ -55,6 +55,7 @@ const Beer = props => {
           margin-bottom: 30px;
           font-size: 5em;
           line-height: 1.2;
+          font-family: "Lora", san-serif;
         }
 
         .Beer__header__tagline {
@@ -124,7 +125,7 @@ const Beer = props => {
           }
 
           .Beer__header__name {
-            font-size: 4em;
+            font-size: 5.4em;
             line-height: 1;
           }
           .Beer__header__ABV {

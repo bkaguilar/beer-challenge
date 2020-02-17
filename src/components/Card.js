@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import Button from "../components/Button";
+import { useState } from "react";
 
 const Card = props => {
   const [isHover, setIsHover] = useState(false);

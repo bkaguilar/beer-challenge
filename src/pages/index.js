@@ -1,20 +1,44 @@
 import fetch from "isomorphic-unfetch";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import App from "../App";
 import Card from "../components/Card";
 
 const index = props => {
+  // const [data, setData] = useState(data.slice(0, 10));
+  const [data, setData] = useState(props.responseData.slice(0, 5));
+  const [number, setNumber] = useState(5);
+  // let d = props.responseData.slice(0, number);
+
+  const loadRef = React.createRef();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio > 0 && number <= 25) {
+          console.log(entry.intersectionRatio);
+          setNumber(number + 5);
+          setData(props.responseData.slice(0, number));
+        }
+      });
+    });
+
+    observer.observe(loadRef.current);
+    return () => observer.disconnect();
+  });
+
   return (
     <App>
       <Header />
       <main className="Beers">
-        {props.responseData.map((card, index) => (
+        {data.map((card, index) => (
           <Link key={card.id} href="/beer/[id]" as={`/beer/${card.id}`}>
-            <a>
+            <a id={card.id} ref={loadRef}>
               <Card card={card} />
             </a>
           </Link>
         ))}
+        <p id="load" />
       </main>
       <style jsx>{`
         .Beers {
@@ -44,10 +68,12 @@ const Header = () => {
         .Header {
           text-align: center;
           padding: 100px 50px;
+          font-family: "Lora", san-serif;
         }
 
         .Header__title {
           font-size: 3em;
+          font-weight: 100;
           color: #7b829f;
         }
         @media only screen and (max-width: 768px) {
@@ -60,12 +86,11 @@ const Header = () => {
   );
 };
 
-index.getInitialProps = async function() {
+index.getInitialProps = async () => {
   const res = await fetch("https://api.punkapi.com/v2/beers");
   const data = await res.json();
-
   return {
-    responseData: data.slice(0, 10)
+    responseData: data
   };
 };
 

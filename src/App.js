@@ -3,7 +3,7 @@ const App = props => {
     <div className="App">
       {props.children}
       <style jsx global>{`
-        @import url("https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap");
+        @import url("https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700|Lora:400,700&display=swap");
         * {
           margin: 0;
           padding: 0;
@@ -14,12 +14,12 @@ const App = props => {
         }
 
         *::-moz-selection {
-          // background: rgba(orange, 0.5);s
-          color: white;
+          background: rgba(249, 203, 56, 1);
+          color: #191919;
         }
         *::selection {
-          // color: $sc-color;
-          // background: rgba($brand-color_2, 0.5);
+          background: rgba(249, 203, 56, 1);
+          color: #191919;
         }
 
         body {
