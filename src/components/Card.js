@@ -5,6 +5,7 @@ const Card = props => {
   const handleHover = () => {
     setIsHover(true);
   };
+
   const handleLeave = () => {
     setIsHover(false);
   };

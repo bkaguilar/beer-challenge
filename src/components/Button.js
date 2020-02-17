@@ -4,6 +4,7 @@ const Button = props => {
   if (!props.state) (name = "IDLE"), (background = "#3153ac");
   if (props.running) (name = "Running"), (background = "green");
   if (props.pause) (name = "Pause"), (background = "#7b829f");
+  if (props.modal) name = "Accept";
   return (
     <button
       className="Button"

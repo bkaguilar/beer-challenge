@@ -1,5 +1,6 @@
 import Button from "./Button";
 import Section from "./Section";
+import Modal from "./Modal";
 import TableList from "./TableList";
 import Nav from "./Nav";
 import { useState } from "react";
@@ -62,6 +63,7 @@ const Ingredients = props => {
 const IngredientsList = props => {
   let titleColumn = ["Name", "Amount", "Action"];
   const [isDone, setIsDone] = useState({});
+  const [alert, setAlert] = useState(false);
 
   let startArray = [];
   let middleArray = [];
@@ -76,12 +78,16 @@ const IngredientsList = props => {
     ) {
       setIsDone({ [e.target.attributes.name.value]: true, ...isDone });
     } else {
-      alert("Ingredient can`t be done until all ingredients are done");
+      setAlert(true);
     }
   };
 
   const isTrue = (el, index, arr) => {
     return el.props.state;
+  };
+
+  const handleClose = () => {
+    setAlert(false);
   };
 
   let list = props.ingredient.map((item, index) => {
@@ -104,6 +110,7 @@ const IngredientsList = props => {
   return (
     <TableList id={props.id} titleColumn={titleColumn}>
       {list}
+      {alert && <Modal onClick={handleClose} />}
     </TableList>
   );
 };
