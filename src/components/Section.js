@@ -5,7 +5,14 @@ const Section = props => (
 
     <style jsx>{`
       .Section {
+        position: relative;
         margin-bottom: 70px;
+      }
+      .Section:nth-child(2) {
+        z-index: 1;
+      }
+      .Section:last-child {
+        z-index: 0;
       }
 
       .Section__title {

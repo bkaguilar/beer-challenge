@@ -21,6 +21,10 @@ const Modal = props => {
           align-items: center;
         }
 
+        body {
+          overflow: hidden;
+        }
+
         .Modal__dialog {
           border-radius: 8px;
           background: white;

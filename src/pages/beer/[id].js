@@ -70,7 +70,7 @@ const BeerHeader = props => {
           position: relative;
           width: 100%;
           max-height: 400px;
-          padding: 0 100px;
+          padding: 0 100px 40px 100px;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -79,7 +79,7 @@ const BeerHeader = props => {
         .BeerHeader__name {
           color: #191919;
           margin-bottom: 30px;
-          font-size: 5em;
+          font-size: 8vmin;
           line-height: 1.2;
           font-family: "Lora", san-serif;
         }
@@ -115,7 +115,8 @@ const BeerHeader = props => {
         }
 
         .BeerHeader__image {
-          transform: translate(-100px, 50px);
+          padding: 0 20px;
+          transform: translate(-20px, 50px);
           height: 500px;
           transition: all 200ms ease;
         }
