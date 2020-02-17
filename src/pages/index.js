@@ -5,10 +5,8 @@ import App from "../App";
 import Card from "../components/Card";
 
 const index = props => {
-  // const [data, setData] = useState(data.slice(0, 10));
   const [data, setData] = useState(props.responseData.slice(0, 5));
   const [number, setNumber] = useState(5);
-  // let d = props.responseData.slice(0, number);
 
   const loadRef = React.createRef();
 
@@ -76,6 +74,7 @@ const Header = () => {
           font-weight: 100;
           color: #7b829f;
         }
+
         @media only screen and (max-width: 768px) {
           .Header {
             padding: 20px;

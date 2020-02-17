@@ -110,7 +110,12 @@ const IngredientsList = props => {
   return (
     <TableList id={props.id} titleColumn={titleColumn}>
       {list}
-      {alert && <Modal onClick={handleClose} />}
+      {alert && (
+        <Modal onClick={handleClose} alert={alert}>
+          The ingredient {props.ingredient.name} can`t be done until all hops
+          with add {props.add} are done.
+        </Modal>
+      )}
     </TableList>
   );
 };
