@@ -8,8 +8,6 @@ import { useState, useEffect } from "react";
 const Ingredients = props => {
   let ingredients = Object.keys(props.page.ingredients);
   let titleColumn = ["Name", "Amount", "Action"];
-  let add;
-
   let startArray = [];
   let middleArray = [];
 
@@ -21,22 +19,24 @@ const Ingredients = props => {
     setIngredientActive(parseInt(e.currentTarget.attributes.index.value));
   };
 
+  const checkAdd = addValue => {
+    const isAddTrue = e => {
+      return e.props.state;
+    };
+    return (
+      addValue === "start" ||
+      (addValue === "middle" && startArray.every(isAddTrue)) ||
+      (addValue === "end" && middleArray.every(isAddTrue))
+    );
+  };
+
   const handleChange = e => {
-    let add = e.target.parentNode.parentNode.dataset.add;
-    if (
-      add === "start" ||
-      (add === "middle" && startArray.every(isTrue)) ||
-      (add === "end" && middleArray.every(isTrue)) ||
-      !add
-    ) {
+    let addValue = e.target.parentNode.parentNode.dataset.add;
+    if (checkAdd(addValue) || !addValue) {
       setIsDone({ [e.target.attributes.name.value]: true, ...isDone });
     } else {
       setAlert(true);
     }
-  };
-
-  const isTrue = (el, index, arr) => {
-    return el.props.state;
   };
 
   const handleClose = () => {
@@ -55,12 +55,13 @@ const Ingredients = props => {
     );
   });
 
-  useEffect(e => {
+  useEffect(() => {
     for (let i = 0; i < hopList.length; i++) {
       if (hopList[i].props.item.add === "start") startArray.push(hopList[i]);
       if (hopList[i].props.item.add === "middle") middleArray.push(hopList[i]);
     }
   });
+
   return (
     <Section name="Ingredients">
       <Nav
