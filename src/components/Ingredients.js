@@ -111,7 +111,7 @@ const IngredientsList = props => {
     <TableList id={props.id} titleColumn={titleColumn}>
       {list}
       {alert && (
-        <Modal onClick={handleClose} alert={alert}>
+        <Modal onClick={handleClose}>
           The ingredient {props.ingredient.name} can`t be done until all hops
           with add {props.add} are done.
         </Modal>
