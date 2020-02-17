@@ -89,7 +89,7 @@ const Methods = props => {
                 pause={isPause["mash_temp" + index]}
                 onClick={handleChange}
               >
-                <span>{item.temp.value + item.temp.unit}</span>
+                <span>{item.temp.value + " " + item.temp.unit}</span>
                 <span>{item.duration}</span>
               </Item>
             ))}
@@ -104,6 +104,7 @@ const Methods = props => {
             >
               <span>
                 {props.page.method.fermentation.temp.value +
+                  " " +
                   props.page.method.fermentation.temp.unit}
               </span>
             </Item>

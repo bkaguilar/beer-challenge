@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 const Ingredients = props => {
   let ingredients = Object.keys(props.page.ingredients);
   let titleColumn = ["Name", "Amount", "Action"];
+  let add;
 
   let startArray = [];
   let middleArray = [];
@@ -54,7 +55,7 @@ const Ingredients = props => {
     );
   });
 
-  useEffect(() => {
+  useEffect(e => {
     for (let i = 0; i < hopList.length; i++) {
       if (hopList[i].props.item.add === "start") startArray.push(hopList[i]);
       if (hopList[i].props.item.add === "middle") middleArray.push(hopList[i]);
@@ -89,7 +90,8 @@ const Ingredients = props => {
             {hopList}
             {alert && (
               <Modal onClick={handleClose}>
-                The ingredient can`t be done until all hops with add are done.
+                The ingredient can`t be done until all hops with add start or
+                middle are done.
               </Modal>
             )}
           </TableList>
@@ -115,8 +117,31 @@ const Item = props => {
         {props.item.amount.value + " " + props.item.amount.unit}
       </span>
       <span>
+        {props.item.add && (
+          <span
+            className="Item__add"
+            title={"Add ingredient in the " + props.item.add}
+          >
+            {props.item.add}
+          </span>
+        )}
         <Button {...props} />
       </span>
+      <style jsx>{`
+        .Item__add {
+          display: inline-block;
+          font-weight: bold;
+          width: 60px;
+          text-align: center !important;
+          font-size: 0.8em;
+          text-transform: capitalize;
+          padding: 2px 10px;
+          margin-right: 15%;
+          border-radius: 5px;
+          color: rgb(123, 130, 159);
+          background: rgba(123, 130, 159, 0.3);
+        }
+      `}</style>
     </li>
   );
 };
