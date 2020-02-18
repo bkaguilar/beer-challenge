@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Section from "./Section";
 import Nav from "./Nav";
 import Button from "./Button";
@@ -11,61 +11,57 @@ const Methods = props => {
   const [isDone, setIsDone] = useState({});
   const [isPause, setIsPause] = useState({});
   const [isRunning, setIsRunning] = useState({});
+  const [seconds, setSeconds] = useState(0);
 
   const handleMethodActiveTab = e => {
     setMethodActive(parseInt(e.currentTarget.attributes.index.value));
   };
 
   const handleChange = e => {
-    let duration;
+    let name = e.target.attributes.name.value;
+    let duration = parseInt(e.target.attributes.duration.value);
     let time = 0;
+    let remaing;
+    let interval;
 
-    if (e.target.hasAttribute("duration")) {
-      duration = parseInt(e.target.attributes.duration.value);
-    } else {
-      setIsDone({ [e.target.attributes.name.value]: true });
-    }
-
-    const timing = e => {
-      let target = e.target.attributes.name.value;
-      setInterval(() => {
-        if (time === duration) {
-          clearInterval(timing);
-          setIsRunning({ [target]: false });
-          setIsDone({ [target]: true });
-        } else {
-          time++;
-          console.log("time = " + time);
-        }
-      }, 1000);
+    const timer = () => {
+      if (time === duration) {
+        clearInterval(interval);
+        setSeconds(0);
+        setIsDone({ [name]: true, ...isDone });
+        setIsRunning({ [name]: false, ...isRunning });
+        setIsPause({ [name]: false, ...isPause });
+        return;
+      } else {
+        time++;
+        remaing = time;
+        setSeconds(remaing);
+      }
     };
 
-    if (
-      !isRunning[e.target.attributes.name.value] &&
-      !isPause[e.target.attributes.name.value] &&
-      !isDone[e.target.attributes.name.value]
-    ) {
-      setIsRunning({ ...isRunning, [e.target.attributes.name.value]: true });
-      timing(e);
-    }
-    if (
-      isRunning[e.target.attributes.name.value] &&
-      !isPause[e.target.attributes.name.value] &&
-      !isDone[e.target.attributes.name.value]
-    ) {
-      clearInterval(timing);
-      setIsPause({ ...isPause, [e.target.attributes.name.value]: true });
-      setIsRunning({ ...isRunning, [e.target.attributes.name.value]: false });
-    }
-    if (
-      !isRunning[e.target.attributes.name.value] &&
-      isPause[e.target.attributes.name.value] &&
-      !isDone[e.target.attributes.name.value]
-    ) {
-      timing();
-      setIsPause({ ...isPause, [e.target.attributes.name.value]: false });
-      setIsRunning({ ...isRunning, [e.target.attributes.name.value]: true });
-      setIsDone({ ...isDone, [e.target.attributes.name.value]: false });
+    if (e.target.hasAttribute("duration")) {
+      if (isDone[name]) {
+        return;
+      }
+
+      if (!isRunning[name] && !isPause[name] && !isDone[name]) {
+        setIsRunning({ [name]: true, ...isRunning });
+        interval = setInterval(timer, 1000);
+      }
+
+      if (isRunning[name]) {
+        clearInterval(interval);
+        setIsRunning({ [name]: false, ...isRunning });
+        setIsPause({ [name]: true, ...isPause });
+      }
+
+      if (isPause[name]) {
+        interval = setInterval(timer, 1000);
+        setIsRunning({ [name]: true, ...isRunning });
+        setIsPause({ [name]: false, ...isPause });
+      }
+    } else {
+      setIsDone({ [name]: true, ...isDone });
     }
   };
 
@@ -80,18 +76,21 @@ const Methods = props => {
         {methodActive === 0 && (
           <TableList id="mash_temp" titleColumn={titleColumn}>
             {props.page.method.mash_temp.map((item, index) => (
-              <Item
-                key={index}
-                name={"mash_temp" + index}
-                duration={item.duration}
-                state={isDone["mash_temp" + index]}
-                running={isRunning["mash_temp" + index]}
-                pause={isPause["mash_temp" + index]}
-                onClick={handleChange}
-              >
+              <li key={index} className="Item">
                 <span>{item.temp.value + " " + item.temp.unit}</span>
                 <span>{item.duration}</span>
-              </Item>
+                <span>
+                  <Button
+                    name={"mash_temp" + index}
+                    duration={item.duration}
+                    seconds={seconds}
+                    state={isDone["mash_temp" + index]}
+                    running={isRunning["mash_temp" + index]}
+                    pause={isPause["mash_temp" + index]}
+                    onClick={handleChange}
+                  />
+                </span>
+              </li>
             ))}
           </TableList>
         )}

@@ -2,7 +2,8 @@ const Button = props => {
   let name,
     background = "";
   if (!props.state) (name = "IDLE"), (background = "#3153ac");
-  if (props.running) (name = "Running"), (background = "green");
+  if (props.running)
+    (name = "Running " + props.seconds + "s"), (background = "green");
   if (props.pause) (name = "Pause"), (background = "#7b829f");
   if (props.modal) name = "Accept";
   return (
