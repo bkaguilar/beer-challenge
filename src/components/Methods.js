@@ -19,7 +19,7 @@ const Methods = props => {
 
   const handleChange = e => {
     let name = e.target.attributes.name.value;
-    let duration = parseInt(e.target.attributes.duration.value);
+    let duration;
     let time = 0;
     let remaing;
     let interval;
@@ -40,6 +40,7 @@ const Methods = props => {
     };
 
     if (e.target.hasAttribute("duration")) {
+      duration = parseInt(e.target.attributes.duration.value);
       if (isDone[name]) {
         return;
       }
