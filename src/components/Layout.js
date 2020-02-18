@@ -1,6 +1,6 @@
-const App = props => {
+const Layout = props => {
   return (
-    <div className="App">
+    <div className="Layout">
       {props.children}
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700|Lora:400,700&display=swap");
@@ -43,7 +43,7 @@ const App = props => {
           list-style: none;
         }
 
-        .App {
+        .Layout {
           max-width: 1300px;
           margin: 0 auto;
         }
@@ -91,4 +91,4 @@ const App = props => {
   );
 };
 
-export default App;
+export default Layout;

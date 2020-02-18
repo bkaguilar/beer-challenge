@@ -1,7 +1,7 @@
 import fetch from "isomorphic-unfetch";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import App from "../App";
+import Layout from "../components/Layout";
 import Card from "../components/Card";
 
 const index = props => {
@@ -26,7 +26,7 @@ const index = props => {
   });
 
   return (
-    <App>
+    <Layout>
       <Header />
       <main className="Beers">
         {data.map((card, index) => (
@@ -54,7 +54,7 @@ const index = props => {
           }
         }
       `}</style>
-    </App>
+    </Layout>
   );
 };
 

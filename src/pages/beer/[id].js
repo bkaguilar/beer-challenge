@@ -1,12 +1,12 @@
-import App from "../../App";
 import Section from "../../components/Section";
 import Ingredients from "../../components/Ingredients";
 import Methods from "../../components/Methods";
 import fetch from "isomorphic-unfetch";
+import Layout from "../../components/Layout";
 
 const Beer = props => {
   return (
-    <App>
+    <Layout>
       <main className="Beer">
         <BeerHeader {...props} />
         <div className="Beer__text">
@@ -47,7 +47,7 @@ const Beer = props => {
           }
         }
       `}</style>
-    </App>
+    </Layout>
   );
 };
 
