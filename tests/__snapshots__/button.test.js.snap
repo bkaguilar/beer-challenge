@@ -3,7 +3,7 @@
 exports[`<Button /> rendering renders correctly 1`] = `
 <button
   alt="IDLE"
-  className="jsx-2194080973 Button"
+  className="jsx-416226579 Button"
   title="IDLE"
 >
   IDLE

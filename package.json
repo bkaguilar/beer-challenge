@@ -32,9 +32,6 @@
     "react-test-renderer": "^16.12.0"
   },
   "jest": {
-    "setupFilesAfterEnv": [
-      "<rootDir>/tests/setupTests.js"
-    ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ]
