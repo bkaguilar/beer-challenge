@@ -4,6 +4,9 @@ import Nav from "./Nav";
 import Button from "./Button";
 import TableList from "./TableList";
 
+let duration, interval;
+let time = 0;
+
 const Methods = props => {
   let methods = Object.keys(props.page.method);
   let titleColumn = ["Temperature", "Duration", "Action"];
@@ -17,27 +20,24 @@ const Methods = props => {
     setMethodActive(parseInt(e.currentTarget.attributes.index.value));
   };
 
+  const timer = (duration, name) => {
+    if (time === duration) {
+      clearInterval(interval);
+      time = 0;
+      setSeconds(0);
+      setIsDone({ [name]: true, ...isDone });
+      setIsRunning({ [name]: false, ...isRunning });
+      setIsPause({ [name]: false });
+      return;
+    } else {
+      time++;
+      setSeconds(time);
+    }
+  };
+
   const handleChange = e => {
     let name = e.target.attributes.name.value;
-    let duration;
-    let time = 0;
-    let remaing;
-    let interval;
-
-    const timer = () => {
-      if (time === duration) {
-        clearInterval(interval);
-        setSeconds(0);
-        setIsDone({ [name]: true, ...isDone });
-        setIsRunning({ [name]: false, ...isRunning });
-        setIsPause({ [name]: false, ...isPause });
-        return;
-      } else {
-        time++;
-        remaing = time;
-        setSeconds(remaing);
-      }
-    };
+    console.log(name);
 
     if (e.target.hasAttribute("duration")) {
       duration = parseInt(e.target.attributes.duration.value);
@@ -47,19 +47,19 @@ const Methods = props => {
 
       if (!isRunning[name] && !isPause[name] && !isDone[name]) {
         setIsRunning({ [name]: true, ...isRunning });
-        interval = setInterval(timer, 1000);
+        interval = setInterval(timer, 1000, duration, name);
       }
 
       if (isRunning[name]) {
         clearInterval(interval);
-        setIsRunning({ [name]: false, ...isRunning });
-        setIsPause({ [name]: true, ...isPause });
+        setIsRunning({ [name]: false });
+        setIsPause({ [name]: true });
       }
 
       if (isPause[name]) {
-        interval = setInterval(timer, 1000);
-        setIsRunning({ [name]: true, ...isRunning });
-        setIsPause({ [name]: false, ...isPause });
+        interval = setInterval(timer, 1000, duration, name);
+        setIsPause({ [name]: false });
+        setIsRunning({ [name]: true });
       }
     } else {
       setIsDone({ [name]: true, ...isDone });

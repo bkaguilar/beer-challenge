@@ -1,10 +1,17 @@
 const Button = props => {
   let name,
+    boxShadow,
     background = "";
-  if (!props.state) (name = "IDLE"), (background = "#3153ac");
+  if (!props.state)
+    (name = "IDLE"),
+      (background = "#3153ac"),
+      (boxShadow = "0 5px 25px -5px rgba(49, 83, 172, 0.8)");
   if (props.running)
-    (name = "Running " + props.seconds + "s"), (background = "green");
-  if (props.pause) (name = "Pause"), (background = "#7b829f");
+    (name = "Running " + props.seconds + "s"),
+      (background = "green"),
+      (boxShadow = "0 5px 25px -5px rgba(0,128,0 , .5)");
+  if (props.pause)
+    (name = "Pause " + props.seconds + "s"), (background = "#7b829f");
   if (props.modal) name = "Accept";
   return (
     <button
@@ -25,9 +32,7 @@ const Button = props => {
           text-transform: capitalize;
           font-weight: bold;
           background: ${props.state ? "#f2e077" : background};
-          box-shadow: ${props.state
-            ? "none"
-            : "0 5px 25px -5px rgba(49, 83, 172, 0.8)"};
+          box-shadow: ${props.state ? "none" : boxShadow};
           transition: all 400ms ease;
         }
 
