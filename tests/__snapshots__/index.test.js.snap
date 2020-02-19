@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Button /> rendering renders correctly 1`] = `
+<button
+  alt="IDLE"
+  className="jsx-2194080973 Button"
+  title="IDLE"
+>
+  IDLE
+</button>
+`;

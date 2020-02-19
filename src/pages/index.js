@@ -36,7 +36,6 @@ const index = props => {
             </a>
           </Link>
         ))}
-        <p id="load" />
       </main>
       <style jsx>{`
         .Beers {
