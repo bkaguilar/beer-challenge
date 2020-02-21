@@ -4,7 +4,8 @@ import Nav from "./Nav";
 import Button from "./Button";
 import TableList from "./TableList";
 
-let duration, interval;
+let duration;
+let interval = [];
 let time = 0;
 
 const Methods = props => {
@@ -22,8 +23,8 @@ const Methods = props => {
 
   const timer = (duration, name) => {
     if (time === duration) {
-      clearInterval(interval);
       time = 0;
+      clearInterval(interval[name]);
       setSeconds(0);
       setIsDone({ [name]: true, ...isDone });
       setIsRunning({ [name]: false, ...isRunning });
@@ -32,6 +33,7 @@ const Methods = props => {
     } else {
       time++;
       setSeconds(time);
+      console.log(time);
     }
   };
 
@@ -47,17 +49,17 @@ const Methods = props => {
 
       if (!isRunning[name] && !isPause[name] && !isDone[name]) {
         setIsRunning({ [name]: true, ...isRunning });
-        interval = setInterval(timer, 1000, duration, name);
+        interval[name] = setInterval(timer, 1000, duration, name);
       }
 
       if (isRunning[name]) {
-        clearInterval(interval);
+        clearInterval(interval[name]);
         setIsRunning({ [name]: false });
         setIsPause({ [name]: true });
       }
 
       if (isPause[name]) {
-        interval = setInterval(timer, 1000, duration, name);
+        interval[name] = setInterval(timer, 1000, duration, name);
         setIsPause({ [name]: false });
         setIsRunning({ [name]: true });
       }

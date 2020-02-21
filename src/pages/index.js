@@ -5,18 +5,17 @@ import Layout from "../components/Layout";
 import Card from "../components/Card";
 
 const index = props => {
-  const [data, setData] = useState(props.responseData.slice(0, 5));
   const [number, setNumber] = useState(5);
+  const [data, setData] = useState(props.responseData.slice(0, number));
 
   const loadRef = React.createRef();
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.intersectionRatio > 0 && number <= 25) {
-          console.log(entry.intersectionRatio);
+        if (entry.intersectionRatio > 0) {
           setNumber(number + 5);
-          setData(props.responseData.slice(0, number));
+          setData(props.responseData.slice(0, number + 5));
         }
       });
     });
@@ -85,7 +84,9 @@ const Header = () => {
 };
 
 index.getInitialProps = async () => {
-  const res = await fetch("https://api.punkapi.com/v2/beers");
+  const res = await fetch(
+    "https://api.punkapi.com/v2/beers?page=1&per_page=80"
+  );
   const data = await res.json();
   return {
     responseData: data
