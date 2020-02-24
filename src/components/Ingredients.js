@@ -21,7 +21,7 @@ const Ingredients = props => {
 
   const checkAdd = addValue => {
     const isAddTrue = e => {
-      return e.props.state;
+      return e.props.done;
     };
     return (
       addValue === "start" ||
@@ -50,7 +50,7 @@ const Ingredients = props => {
         name={item.name + index}
         item={item}
         onClick={handleChange}
-        state={isDone[`${item.name + index}`]}
+        done={isDone[`${item.name + index}`]}
       />
     );
   });
@@ -79,7 +79,7 @@ const Ingredients = props => {
                   name={item.name + index}
                   item={item}
                   onClick={handleChange}
-                  state={isDone[`${item.name + index}`]}
+                  done={isDone[`${item.name + index}`]}
                 />
               );
             })}
@@ -112,7 +112,7 @@ const Ingredients = props => {
 
 const Item = props => {
   return (
-    <li className="Item" data-add={props.item.add} data-state={props.state}>
+    <li className="Item" data-add={props.item.add} data-state={props.done}>
       <span className="Item__name">{props.item.name}</span>
       <span className="Item__value">
         {props.item.amount.value + " " + props.item.amount.unit}
