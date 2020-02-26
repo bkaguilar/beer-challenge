@@ -21,24 +21,26 @@ const Methods = props => {
     setMethodActive(parseInt(e.currentTarget.attributes.index.value));
   };
 
-  const timer = (duration, name) => {
-    if (seconds[name] === duration) {
-      clearInterval(interval[name]);
-      setSeconds({ ...seconds, [name]: 0 });
-      setIsDone({ ...isDone, [name]: true });
-      setIsRunning({ ...isRunning, [name]: false });
-      setIsPause({ ...isPause, [name]: false });
-    } else {
-      setSeconds(prevSeconds => ({
-        ...prevSeconds,
-        [name]: prevSeconds[name] + 1
-      }));
-      console.log();
-    }
+  const timer = name => {
+    setSeconds(prevSeconds => ({
+      ...prevSeconds,
+      [name]: prevSeconds[name] - 1
+    }));
   };
 
+  //Check if the ingredient item seconds is zero
   useEffect(() => {
-    console.log(seconds);
+    let k = Object.keys(interval);
+    if (k.length > 0) {
+      for (let i = 0; i < k.length; i++) {
+        if (seconds[k[i]] === 0) {
+          clearInterval(interval[k[i]]);
+          setIsDone({ ...isDone, [k[i]]: true });
+          setIsRunning({ ...isRunning, [k[i]]: false });
+          setIsPause({ ...isPause, [k[i]]: false });
+        }
+      }
+    }
   }, [seconds]);
 
   const handleChange = e => {
@@ -50,24 +52,24 @@ const Methods = props => {
       }
 
       if (!isRunning[name] && !isPause[name] && !isDone[name]) {
-        setSeconds({ ...seconds, [name]: 0 });
+        setSeconds({ ...seconds, [name]: duration });
         setIsRunning({ ...isRunning, [name]: true });
-        interval[name] = setInterval(timer, 1000, duration, name);
+        interval[name] = setInterval(timer, 1000, name);
       }
 
       if (isRunning[name]) {
-        clearInterval(interval[name]);
         setIsRunning({ ...isRunning, [name]: false });
         setIsPause({ ...isPause, [name]: true });
+        clearInterval(interval[name]);
       }
 
       if (isPause[name]) {
-        interval[name] = setInterval(timer, 1000, duration, name);
         setIsPause({ ...isPause, [name]: false });
         setIsRunning({ ...isRunning, [name]: true });
+        interval[name] = setInterval(timer, 1000, name);
       }
     } else {
-      setIsDone({ [name]: true, ...isDone });
+      setIsDone({ ...isDone, [name]: true });
     }
   };
 
@@ -104,7 +106,7 @@ const Methods = props => {
           <TableList id="fermentation" titleColumn={titleColumn}>
             <Item
               name="fermentation"
-              state={isDone["fermentation"]}
+              done={isDone["fermentation"]}
               onClick={handleChange}
             >
               <span>
