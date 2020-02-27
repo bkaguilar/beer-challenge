@@ -1,40 +1,57 @@
 import fetch from "isomorphic-unfetch";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import Layout from "../components/Layout";
 import Card from "../components/Card";
 
 const index = props => {
-  const [number, setNumber] = useState(5);
-  const [data, setData] = useState(props.responseData.slice(0, number));
+  const observer = useRef();
+  const [page, setPage] = useState(1);
+  const [beers, setBeers] = useState([]);
 
-  const loadRef = React.createRef();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.intersectionRatio > 0) {
-          setNumber(number + 5);
-          setData(props.responseData.slice(0, number + 5));
+  const lastBeer = useCallback(
+    node => {
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          console.log(page);
+          setPage(prevPage => prevPage + 1);
         }
       });
-    });
+      if (node) observer.current.observe(node);
+    },
+    [page]
+  );
 
-    observer.observe(loadRef.current);
-    return () => observer.disconnect();
-  });
+  useEffect(() => {
+    fetch(`https://api.punkapi.com/v2/beers?page=${page}&per_page=10`)
+      .then(res => res.json())
+      .then(data => setBeers(prevBeers => [...prevBeers, ...data]));
+  }, [page]);
 
   return (
     <Layout>
       <Header />
       <main className="Beers">
-        {data.map((card, index) => (
-          <Link key={card.id} href="/beer/[id]" as={`/beer/${card.id}`}>
-            <a id={card.id} ref={loadRef}>
-              <Card card={card} />
-            </a>
-          </Link>
-        ))}
+        {beers.map((card, index) => {
+          if (beers.length === index + 1) {
+            return (
+              <Link key={card.id} href="/beer/[id]" as={`/beer/${card.id}`}>
+                <a id={card.id} ref={lastBeer}>
+                  <Card card={card} />
+                </a>
+              </Link>
+            );
+          } else {
+            return (
+              <Link key={card.id} href="/beer/[id]" as={`/beer/${card.id}`}>
+                <a id={card.id}>
+                  <Card card={card} />
+                </a>
+              </Link>
+            );
+          }
+        })}
       </main>
       <style jsx>{`
         .Beers {
@@ -44,6 +61,12 @@ const index = props => {
           place-items: center;
           justify-content: center;
           grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+        }
+
+        .loading {
+          height: 200px;
+          margin: 30px 0;
+          background: red;
         }
 
         @media only screen and (max-width: 768px) {
@@ -81,16 +104,6 @@ const Header = () => {
       `}</style>
     </header>
   );
-};
-
-index.getInitialProps = async () => {
-  const res = await fetch(
-    "https://api.punkapi.com/v2/beers?page=1&per_page=80"
-  );
-  const data = await res.json();
-  return {
-    responseData: data
-  };
 };
 
 export default index;
