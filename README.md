@@ -1,7 +1,7 @@
 # Beer Challenge
 This project was bootstrapped with [Next.js](https://github.com/zeit/next.js)
 
-![Beer Challenge demo](https://media.giphy.com/media/S5z0Lc0xVuzV6MHftN/giphy.gif)
+![Beer Challenge demo](https://media.giphy.com/media/Ws3hFLxNmKZ4WhxwT3/giphy.gif)
 
 ## Getting Started
 
