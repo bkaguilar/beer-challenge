@@ -1,6 +1,8 @@
 # Beer Challenge
 This project was bootstrapped with [Next.js](https://github.com/zeit/next.js)
 
+![Beer Challenge demo](https://media.giphy.com/media/S5z0Lc0xVuzV6MHftN/giphy.gif)
+
 ## Getting Started
 
 Next.js works with Windows, Mac and Linux alike. You only need to have Node.js installed on your system to begin building Next.js applications.
