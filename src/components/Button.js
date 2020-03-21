@@ -1,24 +1,36 @@
 const Button = props => {
   let name,
+    title,
     boxShadow,
     background = "";
-  if (!props.done)
+
+  if (!props.done) {
     (name = "IDLE"),
+      (title = name),
       (background = "#3153ac"),
       (boxShadow = "0 5px 25px -5px rgba(49, 83, 172, 0.8)");
-  if (props.running)
+  }
+
+  if (props.running) {
     (name = "Running " + props.seconds + "s"),
+      (title = "Timer is running"),
       (background = "green"),
       (boxShadow = "0 5px 25px -5px rgba(0,128,0 , .5)");
-  if (props.pause)
-    (name = "Pause " + props.seconds + "s"), (background = "#7b829f");
+  }
+
+  if (props.pause) {
+    (name = "Pause " + props.seconds + "s"),
+      (title = "Timer is pause"),
+      (background = "#7b829f");
+  }
+
   if (props.modal) name = "Accept";
+
   return (
     <button
       className="Button"
       duration={props.duration}
-      title={props.done ? "Ingredient is ready :P" : "IDLE"}
-      alt={props.done ? "Ingredient is ready :P" : "IDLE"}
+      title={props.done ? "Ingredient is ready :P" : title}
       onClick={props.onClick}
       name={props.name}
     >
