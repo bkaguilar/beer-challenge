@@ -1,3 +1,4 @@
+import { API_URL } from "../../constants";
 import Section from "../../components/Section";
 import Ingredients from "../../components/Ingredients";
 import Methods from "../../components/Methods";
@@ -170,7 +171,7 @@ const BeerHeader = props => {
 
 Beer.getInitialProps = async function(context) {
   const { id } = context.query;
-  const res = await fetch(`https://api.punkapi.com/v2/beers/${id}`);
+  const res = await fetch(`${API_URL}/${id}`);
   const data = await res.json();
 
   return { page: data[0] };

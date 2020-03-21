@@ -1,5 +1,6 @@
 import fetch from "isomorphic-unfetch";
 import { useEffect, useState, useRef, useCallback } from "react";
+import { API_URL } from "../constants";
 import Link from "next/link";
 import Layout from "../components/Layout";
 import Card from "../components/Card";
@@ -24,7 +25,7 @@ const index = props => {
   );
 
   useEffect(() => {
-    fetch(`https://api.punkapi.com/v2/beers?page=${page}&per_page=10`)
+    fetch(`${API_URL}?page=${page}&per_page=10`)
       .then(res => res.json())
       .then(data => setBeers(prevBeers => [...prevBeers, ...data]));
   }, [page]);
